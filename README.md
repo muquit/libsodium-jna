@@ -102,7 +102,7 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
 At this time, *libsodium-jna* is not in maven central. Therefore, before using it, it must be installed first.
 
 ```
-    git clone git@github.com:muquit/libsodium-jna.git
+    git clone https://github.com/muquit/libsodium-jna.git
     cd libsodium-jna
     mvn clean install
     mvn test
