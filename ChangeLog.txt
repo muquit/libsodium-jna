@@ -1,0 +1,5 @@
+# v1.01
+
+* Throw SodiumLibraryException in case of error. Before RuntimeException was thrown for everything.
+  (Jan-31-2017)
+
