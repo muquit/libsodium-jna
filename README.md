@@ -592,9 +592,9 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
 
 ## How to encrypt a private key
 
-This instruction is for encrypting something with a symmetric memory hardened key derived from a passphrase and use that key in encryption. I am just giving the example on encrypting a private key as this is a very common requirement.
+This instruction is for encrypting something with a symmetric memory hardened key derived from a passphrase and use that key in encryption. I am giving the example on encrypting a private key as this is a very common requirement.
 
-When the public and private key pair is generated and it is required to store the private key, the private key must be properly encrypted and stored.
+When the public and private key pair is generated and if it is required to store the private key, the private key must be properly encrypted and stored.
 The following procedure can be used to encrypt the private key:
 
 ### Encrypting the private key
