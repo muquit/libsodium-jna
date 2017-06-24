@@ -66,11 +66,11 @@ public class SodiumLibrary
     }
 
     /**
-     * @return The singleton Sodium object. The single pattern is adapted from 
+     * @return The singleton Sodium object. The singleton pattern is adapted from 
      * kalium java library. Other than that, this library does not use any code
      * from kalium.
      *<p> 
-     * Although libsodium seems to the thread safe now, the code is written 
+     * Although libsodium seems to be thread safe now, the code is written 
      * sometime back and I don't have plan to remove it at this time. 
      * 
      * @author muquit@muquit.com 
