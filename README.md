@@ -112,7 +112,6 @@ To load the project in Eclipse, select _File->Import...->Maven->Existing Maven P
 
 ## Update your project's ```pom.xml```
 
-
 Add the following block inside dependencies block:
 
 ```
@@ -128,7 +127,7 @@ Add the following block inside dependencies block:
         <version>1.0.1</version>
     </dependency>
 ```
-Note: If you do not using maven, look at the end of the document.
+Note: If you do not use maven, look at the end of the document.
 
 # Supported APIs
 
