@@ -51,7 +51,7 @@
 
 Bug reports, suggestions are always welcome! 
 
-If you add support to more libsodium APIs, please send me a pull request. If yo do so, please do not forget to update the documentation add unit tests. If you need tog generate test vectors, please look at ```misc/gen_test_vectors.c```
+If you add support to more libsodium APIs, please send me a pull request. If yo do so, please do not forget to update the documentation add unit tests. If you need to generate test vectors, please look at ```misc/gen_test_vectors.c```
 
 # Supported platforms
 
