@@ -112,6 +112,7 @@ To load the project in Eclipse, select _File->Import...->Maven->Existing Maven P
 
 ## Update your project's ```pom.xml```
 
+
 Add the following block inside dependencies block:
 
 ```
@@ -126,8 +127,9 @@ Add the following block inside dependencies block:
         <artifactId>libsodium-jna</artifactId>
         <version>1.0.1</version>
     </dependency>
-
 ```
+Note: If you do not using maven, look at the end of the document.
+
 # Supported APIs
 
 Before making any API calls, native sodium must be loaded from a specific path. Please look at the section [Load the libsodium C Library first](#load-the-libsodium-c-library-first) for details. 
