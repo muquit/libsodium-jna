@@ -57,7 +57,7 @@ If you add support to more libsodium APIs, please send me a pull request. If yo 
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available. 
 
-The implementation is tested on the following platforms with libsodium v1.0.12 with JVM 1.7 and 1.8.
+The implementation is tested on the following platforms with libsodium v1.0.13 with JVM 1.7 and 1.8.
 
 | Platform | JVM |
 |----------|-----|
@@ -83,14 +83,14 @@ non-maven project.
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.12.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.13.tar.gz](https://download.libsodium.org/libsodium/releases/)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.12.tar.gz
-  cd libsodium-1.0.12
+  tar -xf libsodium-1.0.13.tar.gz
+  cd libsodium-1.0.13
   ./configure
   make && make check
   sudo make install
