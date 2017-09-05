@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.muquit.libsodiumjna</groupId>
   <artifactId>libsodium-jna</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <name>com.muquit.libsodiumjna</name>
   <description>Java bindings for libsodium with Java Native Access (JNA)</description>
   <packaging>jar</packaging>
@@ -12,6 +12,28 @@
       <!-- minimum version of java required -->
       <java.version>1.7</java.version>
   </properties>
+
+  <licenses>
+     <license>
+       <name>MIT License</name>
+       <url>http://www.opensource.org/licenses/mit-license.php</url>
+     </license>
+  </licenses> 
+
+  <developers>
+      <developer>
+        <name>Muhammad Muquit</name>
+        <email>muquit@gmail.com</email>
+        <organization>muquit.com</organization>
+        <organizationUrl>https://www.muquit.com</organizationUrl>
+      </developer>
+  </developers>
+
+	<scm>
+	  <connection>scm:git:git://github.com/muquit/libsodium-jna.git</connection>
+	  <developerConnection>scm:git:ssh://github.com:muquit/libsodium-jna.git</developerConnection>
+	  <url>https://github.com/muquit/libsodium-jna</url>
+	</scm>
 
   <build>
       <plugins>
