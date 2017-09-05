@@ -275,7 +275,6 @@ public class SodiumLibrary
     * <p>
     * Excerpt from libsodium documentation:
     * <blockquote>
-    * <em>
     * <ul>
     * <li> On Windows systems, the RtlGenRandom() function is used
     * <li> On OpenBSD and Bitrig, the arc4random() function is used
@@ -283,7 +282,6 @@ public class SodiumLibrary
     * <li> On other Unices, the /dev/urandom device is used
     * <li>If none of these options can safely be used, custom implementations can easily be hooked.
     * </ul>
-    * </em>
     * </blockquote>
     * <p>
     * @param  size Number of random bytes to generate
