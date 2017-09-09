@@ -124,7 +124,7 @@ Add the following block inside dependencies block:
     <dependency>
         <groupId>com.muquit.libsodiumjna</groupId>
         <artifactId>libsodium-jna</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </dependency>
 ```
 Note: If you do not use maven, look at the end of the document.
