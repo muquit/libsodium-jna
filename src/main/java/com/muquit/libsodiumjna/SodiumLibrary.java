@@ -21,7 +21,7 @@ import com.sun.jna.Pointer;
  * @author muquit@muquit.com - Oct 21, 2016, 11:37:24 AM - first cut
  * 
  * @see <a href="https://download.libsodium.org/doc/" target="_blank">Native libsodium</a> documentation
- * @see <a href="https://github.com/muquit/libsodium-jna/" target="_blank">libsodium-jna Homepage</a>
+ * <a href="https://github.com/muquit/libsodium-jna/" target="_blank">libsodium-jna Homepage</a>
  */
 public class SodiumLibrary
 {
@@ -37,20 +37,51 @@ public class SodiumLibrary
     }
     
    /**
-    * Set the absolute path of the libsodium shared library/DLL. This method 
-    * must be called before calling any methods. Although JNA supports loading
+    * Set the absolute path of the libsodium shared library/DLL.
+    *<p> 
+    * This method 
+    * <b><font color="red">must</font></b> be called before calling any methods in libsodium-jna. Although JNA supports loading
     * a shared library from path, libsodium-jna requires specifying the absolute
     * path to make sure that the exact library is being loaded.
-    *<p> 
+    * For example, in Linux, it might be /usr/local/lib/libsodium.so, in Windows, 
+    * it might be c:/libs/libsodium.dll, in MacOS, it might be 
+    * /usr/local/lib/libsodium.dylib etc. The point is there is no
+    * ambiguity, I want to load the library I want, not one from somewhere in the path. 
+    * </p>
     * @param libraryPath The absolute path of the libsodium library. 
+    * <h3>Example</h3>
+    * <pre>
+    * <code>
+    * private static String libraryPath = null;
+    *
+    * if (Platform.isMac())
+    * {
+    *     // MacOS
+    *     libraryPath = "/usr/local/lib/libsodium.dylib";
+    *     libraryPath = libraryPath;
+    *     logger.info("Library path in Mac: " + libraryPath);
+    * }
+    * else if (Platform.isWindows())
+    * {
+    *     // Windows
+    *     libraryPath = "C:/libsodium/libsodium.dll";
+    *     logger.info("Library path in Windows: " + libraryPath);
+    * }
+    * else
+    * {
+    *     // Linux
+    *     libraryPath = "/usr/local/lib/libsodium.so";
+    *     logger.info("Library path: " + libraryPath);
+    * }
     * 
-    * For example,
-    * in Linux, it might be <code>/usr/local/lib/libsodium.so</code>, in Windows, 
-    * it might be <code>c:/libs/libsodium.dll</code>, in MacOS, it might be 
-    * <code>/usr/local/lib/libsodium.dylib</code> etc. The point is there is no
-    * ambiguity, I want to load the library I want, not one from somewhere in the path.
-    * 
-    * @author muquit@muquit.com - Oct 17, 2016, 12:16:50 PM - first cut
+    * logger.info("loading libsodium...");
+    * SodiumLibrary.setLibraryPath(libraryPath);
+    * // To check the native library is actually loaded, print the version of 
+    * // native sodium library
+    * String v = SodiumLibrary.libsodiumVersionString();
+    * logger.info("libsodium version: " + v);
+    * </code>
+    * </pre>
     */
     public static void setLibraryPath(String libraryPath)
     {
@@ -59,7 +90,6 @@ public class SodiumLibrary
     
     /**
      * @return path of library set by SodiumLibary.setLibraryPath()
-     * @author muquit@muquit.com - Oct 21, 2016, 3:03:59 PM - first cut
      */
     public static String getLibaryPath()
     {
@@ -73,9 +103,7 @@ public class SodiumLibrary
      *<p> 
      * Although libsodium seems to be thread safe now, the code is written 
      * sometime back and I don't have plan to remove it at this time. 
-     * 
-     * @author muquit@muquit.com 
-     * 
+     * </p>
      * @throws RuntimeException at run time if the libsodium library path 
      * is not set by calling {@link SodiumLibrary#setLibraryPath(String)}
      */
@@ -106,7 +134,6 @@ public class SodiumLibrary
      * Declare all the supported <a href="https://download.libsodium.org/doc/" target="_blank">libsodium</a> C functions in this interface and 
      * implement them in this class as static methods.
      * 
-     * @author muquit@muquit.com - Oct 21, 2016, 11:44:45 AM - first cut
      */
     public interface Sodium extends Library
     {
@@ -114,13 +141,13 @@ public class SodiumLibrary
         int sodium_library_version_minor();
         int sodium_init();
 
-        /**
+        /*
          * @return version string of the libsodium library
          * include/sodium/version.h
          */
         String sodium_version_string();
         
-        /**
+        /*
          * Fills size bytes starting at buf with an unpredictable sequence of bytes.
          * @param buf  buffer to fill with random bytes
          * @param size number of random bytes
@@ -128,8 +155,7 @@ public class SodiumLibrary
          */
         void randombytes_buf(byte[] buf, int size);
 
-        /**
-         * 
+        /*
          * see include/sodium/crypto_pwhash.h
          */
         int crypto_pwhash_alg_argon2i13();
@@ -221,7 +247,6 @@ public class SodiumLibrary
         * @param pk - Public Key returns
         * @param sk - Private Key
         * @return 0 on success -1 on failure
-        * @author muquit@muquit.com - Oct 18, 2016, 4:39:20 PM - first cut
         */
         int crypto_scalarmult_base(byte[] pk, byte[] sk);
         
@@ -249,7 +274,7 @@ public class SodiumLibrary
     
    /**
     * Return unpredictable sequence of bytes.
-    * <p>
+    * 
     * Excerpt from libsodium documentation:
     * <blockquote>
     * <ul>
@@ -260,12 +285,9 @@ public class SodiumLibrary
     * <li>If none of these options can safely be used, custom implementations can easily be hooked.
     * </ul>
     * </blockquote>
-    * <p>
     * @param  size Number of random bytes to generate
     * @return Array of random bytes
-    * @author muquit@muquit.com - Oct 21, 2016
     * @see <a href="https://download.libsodium.org/doc/generating_random_data/" target="_blank">Generating random data</a> in libsodium page
-    * <p>
     * <h3>Example</h3>
     * <pre>
     * <code>
@@ -334,9 +356,8 @@ public class SodiumLibrary
      * for password hashing and password-based key derivation. Argon2i also makes multiple passes over the memory to 
      * <br>
      * protect from tradeoff attacks.
-     *<p>
+     *</p>
      * This is the variant implemented in Sodium since version 1.0.9.
-     *<p> 
      * Argon2 is recommended over Scrypt if requiring libsodium &gt;= 1.0.9 is not a concern.
      * </blockquote>
      * 
@@ -346,19 +367,16 @@ public class SodiumLibrary
      * password.
      * @return Generated key as an array of bytes
      * @throws SodiumLibraryException if libsodium's crypto_pwhash() does not return 0
-     *<p> 
      * <code>crypto_pwhash()</code> in <a href="https://download.libsodium.org/doc/password_hashing/">Password hashing</a>
      * libsodium page. <a href="https://github.com/P-H-C/phc-winner-argon2/raw/master/argon2-specs.pdf">Argon2i v1.3 Algorithm</a>. 
-     * <p>
-     * Example:
+     * <h3>Example</h3>
      * <pre>
-     * {@code
-     * 
-    String password = "This is a Secret";
-    salt = SodiumLibary.randomBytes(sodium().crypto_pwhash_saltbytes());
-    byte[] key = SodiumLibary.cryptoPwhashArgon2i(password.getBytes(),salt);
-    String keyHex = SodiumUtils.bin2hex(key);
-     *}
+     * <code>
+     * String password = "This is a Secret";
+     * salt = SodiumLibary.randomBytes(sodium().crypto_pwhash_saltbytes());
+     * byte[] key = SodiumLibary.cryptoPwhashArgon2i(password.getBytes(),salt);
+     * String keyHex = SodiumUtils.bin2hex(key);
+     </code>
      *</pre>
      */
     public static byte[] cryptoPwhashArgon2i(byte[] passwd, byte[] salt) throws SodiumLibraryException
@@ -396,25 +414,33 @@ public class SodiumLibrary
      * @param passwd Password bytes
      * @param salt   Salt bytes
      * @return key bytes
-     * @throws SodiumLibraryException
-     * <p>
-     * @author muquit@muquit.com - Mar 18, 2017
+     * @throws SodiumLibraryException on error
      */
     public static byte[] deriveKey(byte[] passwd, byte[] salt) throws SodiumLibraryException
     {
         return cryptoPwhashArgon2i(passwd, salt);
     }
     
-    
-    /**
-     * Return US-ASCII encoded key derives from the password
-     * 
-     * @param password  password to use in key derivation
-     * @return US-ASCII encoded string
-     * @throws SodiumLibraryException
-     * <p>
-     * @author muquit@muquit.com - Oct 22, 2016
-     */
+   /**
+    * Returns a US-ASCII encoded key derived from the password.
+    * 
+    * The key can be stored for verification. Memory-hard, CPU-intensive hash function is applied to the  
+    * password in key generation process. Automatically generated salt is used in the key generation
+    * Uses opslimit as <code>crypto_pwhash_opslimit_interactive()</code> and memlimit as 
+    * <code>crypto_pwhash_memlimit_interactive()</code>
+    * @param password The password 
+    * @throws SodiumLibraryException on error
+    * @return derived key as US-ASCII encoded string
+    * <h3>Example</h3>
+    * <pre>
+    * <code>
+    *  String password = new String("বাংলা");
+    *  // convert to UTF-8 encoded bytes
+    *  byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8); // requires jdk 1.7+
+    *  String key = SodiumLibrary.cryptoPwhashStr(passwordBytes);
+    * </code>
+    * </pre>
+    */
     public static String cryptoPwhashStr(byte[] password) throws SodiumLibraryException
     {
         byte[] hashedPassword = new byte[sodium().crypto_pwhash_strbytes()];
@@ -431,15 +457,35 @@ public class SodiumLibrary
         return usAscii;
     }
 
-    /**
+    /*
      * Verify a US-ASCII encoded key derived previously by calling SodiumLibrary.cryptoPwhashStr(byte[])
      * 
      * @param usAsciiKey key in US ASCII
      * @param password bytes
      * @return true if the key can be verified false otherwise
-     * <p>
-     * @author muquit@muquit.com - Oct 22, 2016
      */
+    
+   /**
+    * Verify a US-ASCII encoded key derived previously by calling  {@link SodiumLibrary#cryptoPwhashStr(byte[])}
+    *  @param usAsciiKey US-ASCII encoded key to verify
+    *  @param password The password
+    *  @return true if the key can be verified, false otherwise
+    *  <h3>Example</h3>
+    *  <pre>
+    *  <code>
+    *  String password = new String("বাংলা");
+    * // convert to UTF-8 encoded bytes
+    * byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8); // requires jdk 1.7+
+    * String key = SodiumLibrary.cryptoPwhashStr(passwordBytes);
+    * // verify the password
+    * boolean rc = SodiumLibrary.cryptoPwhashStrVerify(key, passwordBytes);
+    * if (rc)
+    * {
+    *   logger.info("Password is verified");
+    * }
+    *  </code>
+    *  </pre>
+    */
     public static boolean cryptoPwhashStrVerify(String usAsciiKey, byte[] password)
     {
         byte[] keyBytes = usAsciiKey.getBytes(StandardCharsets.US_ASCII);
@@ -462,7 +508,7 @@ public class SodiumLibrary
      * <p>
      * Even though its memory hardness can be significantly reduced at the cost of extra computations, this function 
      * remains an excellent choice today, provided that its parameters are properly chosen.
-     * <p>
+     * </p>
      * Scrypt is available in libsodium since version 0.5.0, which makes it a better choice than Argon2 if compatibility with older libsodium versions is a concern.
      * </blockquote>
      * 
@@ -472,8 +518,7 @@ public class SodiumLibrary
      * The salt should be saved by the caller as it will be needed to derive the key again from the 
      * password.
      * @return key as an array of bytes
-     * @throws SodiumLibraryException
-     * 
+     * @throws SodiumLibraryException on error
      * @see <a href="https://download.libsodium.org/doc/password_hashing/" target="_blank">Password hashing</a>
      */
     public static byte[] cryptoPwhashScrypt(byte[] passwd, byte[] salt) throws SodiumLibraryException
@@ -523,13 +568,15 @@ public class SodiumLibrary
     }
     
     /**
-     * Encrypts a message with a key and a nonce to keep it confidential
+     * Encrypts a message with a key and a nonce to keep it confidential.
      * 
      * The same key is used to encrypt and decrypt the messages. Therefore, the key must be kept confidential.
      *
      * @param message message bytes to encrypt
-     * @param nonce  nonce bytes. The nonce must be {@link cryptoBoxNonceBytes()} bytes long and can be generated by
+     * @param nonce  nonce bytes. The nonce must be {@link SodiumLibrary#cryptoBoxNonceBytes()} bytes long and can be generated by
      * calling {@link SodiumLibrary#randomBytes(int)}
+     * @param key They key for encryption
+     * @throws SodiumLibraryException on error
      * @return Encrypted cipher text bytes 
      * @see <a href="https://download.libsodium.org/libsodium/content/secret-key_cryptography/authenticated_encryption.html" target="_blank">Secret-key authenticated encryption</a>
      */  
@@ -551,7 +598,7 @@ public class SodiumLibrary
     }
     
    /**
-    * Verifies and decrypts a ciphertext
+    * Verifies and decrypts a ciphertext.
     * 
     *  The ciphertext is created by {@link SodiumLibrary#cryptoSecretBoxEasy(byte[] message, byte[] nonce, byte[] key)}
     * 
@@ -560,9 +607,37 @@ public class SodiumLibrary
     * @param key The key used in encryption
     * @return decrypted plaintext bytes
     * @throws SodiumLibraryException - if nonce size is incorrect or decryption fails
-    * <p>
-    * @author muquit@muquit.com - Sep 9, 2017
     * @see <a href="https://download.libsodium.org/libsodium/content/secret-key_cryptography/authenticated_encryption.html" target="_blank">Secret-key authenticated encryption</a>
+    * <h3>Example</h3>
+    * <pre>
+    * <code>
+    * // don't forget to load the libsodium library first
+    * String message = "This is a message";
+    * 
+    * // generate nonce
+    * long nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes();
+    * byte[] nonceBytes = SodiumLibrary.randomBytes((int) nonceBytesLength);
+    * byte[] messageBytes = message.getBytes();
+    *
+    * // generate the encryption key
+    * byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
+    * 
+    * // encrypt
+    * byte[] cipherText = SodiumLibrary.cryptoSecretBoxEasy(messageBytes, nonceBytes, key);
+    *
+    * // now decrypt
+    * byte[] decryptedMessageBytes = SodiumLibrary.cryptoSecretBoxOpenEasy(cipherText, nonceBytes, key);
+    * String decryptedMessage;
+    * try
+    * {
+    *    decryptedMessage = new String(decryptedMessageBytes, "UTF-8");
+    *    System.out.println("Decrypted message: " + decryptedMessageBytes);
+    * } catch (UnsupportedEncodingException e)
+    * {
+    *    e.printStackTrace();
+    * }
+    * </code>
+    * </pre>
     */
     public static byte[] cryptoSecretBoxOpenEasy(byte[] cipherText,byte[] nonce, byte[] key) throws SodiumLibraryException
     {
@@ -599,9 +674,7 @@ public class SodiumLibrary
     * @param nonce The nonce to use in encryption
     * @param key The key to encrypt
     * @return {@link SodiumSecretBox}
-    * @throws SodiumLibraryException
-    * <p>
-    * @author muquit@muquit.com - Sep 9, 2017
+    * @throws SodiumLibraryException on error
     * @see <a href="https://download.libsodium.org/libsodium/content/secret-key_cryptography/authenticated_encryption.html" target="_blank">Secret-key authenticated encryption</a>
     */
     public static SodiumSecretBox cryptoSecretBoxDetached(byte[] message, byte[] nonce, byte[] key) throws SodiumLibraryException
@@ -643,9 +716,7 @@ public class SodiumLibrary
     * @param nonce Nonce used in encryption
     * @param key The key used in encryption
     * @return decrypted plaintext bytes
-    * @throws SodiumLibraryException
-    * <p>
-    * @author muquit@muquit.com - Sep 9, 2017
+    * @throws SodiumLibraryException on error
     * @see <a href="https://download.libsodium.org/libsodium/content/secret-key_cryptography/authenticated_encryption.html" target="_blank">Secret-key authenticated encryption</a>
     */
     public static byte[] cryptoSecretBoxOpenDetached(SodiumSecretBox secretBox,
@@ -688,10 +759,7 @@ public class SodiumLibrary
      * @param message Computes the tag for this message bytes
      * @param key The secret key. The key size must be crypto_auth_keybytes() long
      * @return Authentication tag bytes
-     * @throws SodiumLibraryException
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
-     * <p>
+     * @throws SodiumLibraryException on error
      * @see <a href="https://download.libsodium.org/libsodium/content/secret-key_cryptography/secret-key_authentication.html" target="_blank">Secret-key authentication</a>
      */
     public static byte[] cryptoAuth(byte[] message, byte[] key) throws SodiumLibraryException
@@ -718,9 +786,7 @@ public class SodiumLibrary
      * @param message The message
      * @param key The secret key used to create the authentication code
      * @return true or false
-     * @throws SodiumLibraryException
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
+     * @throws SodiumLibraryException on error
      * @see <a href="https://download.libsodium.org/libsodium/content/secret-key_cryptography/secret-key_authentication.html" target="_blank">Secret-key authentication</a>
      */
     public static boolean cryptoAuthVerify(byte[] mac, byte[] message, byte[] key) throws SodiumLibraryException
@@ -748,8 +814,7 @@ public class SodiumLibrary
      * Randomly generates a private key and the corresponding public key
      * 
      * @return {@link SodiumKeyPair}
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
+     * @throws SodiumLibraryException on error
      * @see <a href="https://download.libsodium.org/libsodium/content/public-key_cryptography/authenticated_encryption.html" target="_blank">Public-key authenticated encryption</a>
      */
     public static SodiumKeyPair cryptoBoxKeyPair() throws SodiumLibraryException
@@ -771,11 +836,9 @@ public class SodiumLibrary
     
     /**
      * Given a private key, generate the corresponding public key
-     * 
      * @param privateKey The private key
+     * @throws SodiumLibraryException on error
      * @return public key bytes
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
      */
     public static byte[] cryptoPublicKey(byte[] privateKey) throws SodiumLibraryException
     {
@@ -834,10 +897,8 @@ public class SodiumLibrary
         return sodium().crypto_secretbox_macbytes();        
     }
 
-   /**
+   /*
     * @return number of salt bytes
-    * <p>
-    * @author muquit@muquit.com - Jan 1, 2017
     */
     public static int cryptoNumberSaltBytes()
     {
@@ -883,6 +944,7 @@ public class SodiumLibrary
     * @param nonce {@link SodiumLibrary#cryptoBoxNonceBytes()} bytes of nonce. It must be preserved  because it will be needed during decryption
     * @param publicKey Recipient's public key for encrypting the message
     * @param privateKey Sender's private key for creating authentication tag
+    * @throws SodiumLibraryException on error
     * @return encrypted message as an array of bytes
     */    
     public static byte[] cryptoBoxEasy(byte[] message, byte[] nonce,
@@ -916,7 +978,7 @@ public class SodiumLibrary
     * @param nonce Nonce used during encryption 
     * @param publicKey Sender's (Alice) public key for verifying the message
     * @param privateKey Recipient's (Bob)  Private key to decrypt the message
-    * 
+    * @throws SodiumLibraryException on error
     * @return Decrypted message as an array of bytes.
     */
     public static byte[] cryptoBoxOpenEasy(byte[] cipherText, byte[]nonce, 
@@ -946,10 +1008,9 @@ public class SodiumLibrary
      * 
      * @param message The message bytes to encrypt
      * @param recipientPublicKey Recipient's public key 
+     * @throws SodiumLibraryException on error
      * @return Encrypted message bytes. The length of the cipher text will be 
      * {@link SodiumLibrary#cryptoBoxSealBytes()} + message.length
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
      * @see <a href="https://download.libsodium.org/libsodium/content/public-key_cryptography/sealed_boxes.html" target="_blank">Sealed boxes</a>
      */
     public static byte[] cryptoBoxSeal(byte[] message, byte[] recipientPublicKey) throws SodiumLibraryException
@@ -972,9 +1033,9 @@ public class SodiumLibrary
     * @param cipherText Ciphertext to decrypt
     * @param pk Recipient's public key
     * @param sk Recipient's private Key
+    * @throws SodiumLibraryException on error
     * @return Decrypted plaintext bytes. 
-    * <p>
-    * @author muquit@muquit.com - Sep 9, 2017
+    * @throws SodiumLibraryException on error
     * @see <a href="https://download.libsodium.org/libsodium/content/public-key_cryptography/sealed_boxes.html" target="_blank">Sealed boxes</a>
     */
     public static byte[] cryptoBoxSealOpen(byte[] cipherText,byte[] pk, byte[] sk) throws SodiumLibraryException

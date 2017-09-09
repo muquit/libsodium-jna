@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A helper class to convert hex to binary and vice versa. It uses apache commons Hex class.
- * I get confused (dyslexic) with encode decode methods of {@link org.apache.commons.codec.binary.Hex} class and
+ * I get confused (dyslexic) with encode decode methods of org.apache.commons.codec.binary.Hex class and
  * always have to look it up!
  * @author muquit@muquit.com - Oct-09-2016
  */
@@ -17,7 +17,7 @@ public class SodiumUtils
     private final static Logger logger = LoggerFactory.getLogger(SodiumUtils.class);
     
     /**
-     * Convert a Hex string to Binary. It uses {@link org.apache.commons.codec.binary.Hex#decodeHex(char[])}
+     * Convert a Hex string to Binary. It uses org.apache.commons.codec.binary.Hex.decodeHex(char[])
      * 
      * @param hexString Hex string to convert
      * @return Binary bytes
@@ -40,7 +40,7 @@ public class SodiumUtils
     }
     
     /**
-     * Convert binary data to Hex string. It uses {@link org.apache.commons.codec.binary.Hex#encodeHexString(byte[])}
+     * Convert binary data to Hex string. It uses org.apache.commons.codec.binary.Hex.encodeHexString(byte[])
      * 
      * @param data Binary data bytes to convert
      * @return Hex string

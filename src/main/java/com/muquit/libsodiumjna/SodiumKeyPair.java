@@ -1,9 +1,7 @@
 package com.muquit.libsodiumjna;
 
 /**
- * A class to hold the public and private key pairs created by {@link SodiumLibrary#cryptoBoxKeyPair()}
- * 
- * @author muquit@muquit.com - Oct 21, 2016, 11:35:44 AM - first cut
+ * A class to hold the public and private key pairs used by {@link SodiumLibrary#cryptoBoxKeyPair()}
  */
 public class SodiumKeyPair
 {
