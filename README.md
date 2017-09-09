@@ -62,7 +62,7 @@ The implementation is tested on the following platforms with libsodium v1.0.13 w
 | Platform | JVM |
 |----------|-----|
 | 64 bit Windows 7 and 10 | 64 bit JVM |
-| 64 bit MacOS X running El Capital | 64 bit JVM |
+| 64 bit MacOS X running Sierra and El Capitan | 64 bit JVM |
 | 64 bit Linux | 64 bit JVM |
 | 32 bit Linux | 32 bit JVM |
 
@@ -116,9 +116,9 @@ Add the following block inside dependencies block:
 
 ```
     <!-- 
-     | libsodium-jna is not in the maven central yet. so it has to be 
-     | installed first at the system by typing: mvn clean install
-     | and most of all libsodium must be installed first in the 
+     | libsodium-jna is not in the maven central yet (I am working on it). 
+     | So it has to be installed first at the system by typing: mvn clean install
+     | and most of all native libsodium must be installed first in the 
      | system before using it.
     -->
     <dependency>
