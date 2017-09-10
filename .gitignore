@@ -1,1 +1,8 @@
+.project
+.classpath
+.settings/
+*.tmp
+*.swp
+*.bak
+*.loadpath
 /target/
