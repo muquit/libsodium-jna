@@ -17,8 +17,10 @@ import com.sun.jna.Pointer;
  * All the methods are
  * static methods. Most methods throw {@link com.muquit.libsodiumjna.exceptions.SodiumLibraryException} at run time
  * in case of errors.
- * 
- * @author muquit@muquit.com - Oct 21, 2016, 11:37:24 AM - first cut
+ * <p> 
+ * Please look at <a href="https://github.com/muquit/libsodium-jna/" target="_blank">libsodium-jna Homepage</a> for
+ * instructions on how to get started.
+ * </p>
  * 
  * @see <a href="https://download.libsodium.org/doc/" target="_blank">Native libsodium</a> documentation
  * <a href="https://github.com/muquit/libsodium-jna/" target="_blank">libsodium-jna Homepage</a>

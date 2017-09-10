@@ -20,7 +20,6 @@ import com.muquit.libsodiumjna.SodiumLibrary;
 import com.muquit.libsodiumjna.SodiumSecretBox;
 import com.muquit.libsodiumjna.SodiumUtils;
 import com.muquit.libsodiumjna.exceptions.SodiumLibraryException;
-import com.sun.jna.Native;
 import com.sun.jna.Platform;
 
 public class TestSodiumLibrary
@@ -269,9 +268,81 @@ public class TestSodiumLibrary
         String decryptedHex = SodiumUtils.binary2Hex(decrypted);
         logger.info("decrypted: " + decryptedHex);
         assertEquals(TestVectors.CRYPTO_BOX_BOB_PLAINTEXT,decryptedHex);
-
 	}
 	
+	@Test
+	public void testCryptoBoxEasy2() throws SodiumLibraryException
+	{
+	    // Alice generates key pair
+		SodiumKeyPair aliceKeyPair = SodiumLibrary.cryptoBoxKeyPair();
+		byte[] alicePublicKey = aliceKeyPair.getPublicKey();
+		byte[] alicePrivateKey = aliceKeyPair.getPrivateKey();
+   
+		// Bob generates key pair
+		SodiumKeyPair bobKeyPair = SodiumLibrary.cryptoBoxKeyPair();
+ 		byte[] bobPublicKey = bobKeyPair.getPublicKey();
+		byte[] bobPrivateKey = bobKeyPair.getPrivateKey();
+		
+		// Generate nonce
+		byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoBoxNonceBytes());
+
+		String secretMessage = "Hi Bob, This is Alice";
+		// Alice encrypts the message with Bob's public key
+		byte[] cipherText = SodiumLibrary.cryptoBoxEasy(
+	        secretMessage.getBytes(), nonce, 
+			bobPublicKey,
+			alicePrivateKey);
+		String cipherHex = SodiumUtils.binary2Hex(cipherText);
+		logger.info("Ciphertext: " + cipherHex);
+
+        // Bob Decrypts ciphertext with his Private key
+        byte[] decrypted = SodiumLibrary.cryptoBoxOpenEasy(
+        		cipherText, nonce,
+        		alicePublicKey,
+        		bobPrivateKey);
+        String decrypteString;
+        try
+        {
+            decrypteString = new String(decrypted, "UTF-8");
+            logger.info("decrypted: " + decrypteString);
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+	}
+
+	@Test
+	public void testCryptoBoxSeal2() throws SodiumLibraryException
+	{
+		// Bob generates key pair
+		SodiumKeyPair bobKeyPair = SodiumLibrary.cryptoBoxKeyPair();
+ 		byte[] bobPublicKey = bobKeyPair.getPublicKey();
+		byte[] bobPrivateKey = bobKeyPair.getPrivateKey();
+   
+		String secretMessage = "Hi Bob, This is Alice";
+		// Alice encrypts with Bob's public key
+		byte[] cipherText = SodiumLibrary.cryptoBoxSeal(secretMessage.getBytes(), bobPublicKey);
+		String cipherHex = SodiumUtils.binary2Hex(cipherText);
+		logger.info("Ciphertext: " + cipherHex);
+		logger.info("Ciphertext length : " + cipherText.length);
+		
+		long ciperTextlength = SodiumLibrary.cryptoBoxSealBytes() + secretMessage.length();
+		logger.info("length: " + ciperTextlength);
+
+		
+		// Bob decrypts with his private key
+		byte[] decrypted = SodiumLibrary.cryptoBoxSealOpen(cipherText, bobPublicKey, bobPrivateKey);
+
+        try
+        {
+            String decrypteString = new String(decrypted, "UTF-8");
+            logger.info("decrypted: " + decrypteString);
+        } catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+	}
+
 	@Test
 	public void testCrytoBoxSeal() throws SodiumLibraryException
 	{
@@ -293,6 +364,7 @@ public class TestSodiumLibrary
 	    logger.info("decrypted: " + hex);
         assertEquals(messageHex,hex);
 	}
+	
 	
 	/**
 	 * Test encrypt with own public key and decrypt with own private key

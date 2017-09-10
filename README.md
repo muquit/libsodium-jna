@@ -15,28 +15,28 @@
     - [Password hashing, Key generation](#password-hashing-key-generation)
 - [APIs](#apis)
     - [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
+        - [Example: Load the native libsodium library](#example-load-the-native-libsodium-library)
     - [Version of sodium library](#version-of-sodium-library-1)
-        - [Example:](#example)
+        - [Example: Print libsodium version](#example-print-libsodium-version)
     - [Generate random data](#generate-random-data)
-        - [Example](#example)
+        - [Example: Generate random data](#example-generate-random-data)
     - [Secret-key authenticated cryptography](#secret-key-authenticated-cryptography)
         - [Encrypt a message with a key and a nonce](#encrypt-a-message-with-a-key-and-a-nonce)
         - [Verify and decrypt the message](#verify-and-decrypt-the-message)
-        - [Example](#example-1)
+        - [Example: Encrypt and Decrypt a message](#example-encrypt-and-decrypt-a-message)
     - [Public-key cryptography](#public-key-cryptography-1)
         - [Generate Key Pair](#generate-key-pair)
-        - [Example](#example-2)
-        - [Example: Alice (sender) Encrypts with Bob's (recipient) public key and creates authentication tag with her private key](#example-alice-sender-encrypts-with-bobs-recipient-public-key-and-creates-authentication-tag-with-her-private-key)
-        - [Example: Bob (recipient) verifies with Alice's (sender) public key and decrypts with his public key](#example-bob-recipient-verifies-with-alices-sender-public-key-and-decrypts-with-his-public-key)
+        - [Example: Generate key pair](#example-generate-key-pair)
+        - [Example: Alice shares secret with Bob, Bob verifies and decrypt it](#example-alice-shares-secret-with-bob-bob-verifies-and-decrypt-it)
         - [Example: Alice (sender) anonymously encrypts message with Bob's (recipient) public key](#example-alice-sender-anonymously-encrypts-message-with-bobs-recipient-public-key)
         - [Example: Bob (recipient) decrypts the message with his private key](#example-bob-recipient-decrypts-the-message-with-his-private-key)
     - [Password hashing, key generation](#password-hashing-key-generation)
         - [Derive Key from password](#derive-key-from-password)
-        - [Example:](#example-1)
+        - [Example: Derive key from password](#example-derive-key-from-password)
         - [Derive US-ASCII encoded key from password for storing](#derive-us-ascii-encoded-key-from-password-for-storing)
-        - [Example:](#example-2)
+        - [Example: Dervice key from password as US-ASCII string](#example-dervice-key-from-password-as-us-ascii-string)
         - [Verify Stored US-ASCII encoded key with password](#verify-stored-us-ascii-encoded-key-with-password)
-        - [Example](#example-3)
+        - [Example: Verify US-ASCII encoded string](#example-verify-us-ascii-encoded-string)
     - [How to encrypt a private key](#how-to-encrypt-a-private-key)
         - [Encrypting the private key](#encrypting-the-private-key)
         - [Decrypting the private key](#decrypting-the-private-key)
@@ -203,37 +203,37 @@ The following APIs are implemented at this time.
 Before making call to any API, the native *sodium C library*  must be loaded explicitly from a specific path. It is possible to load the library
 from path, however *libsodium-jna* is designed to load *sodium library* explicitly from a path.
 
-Example on how to load the libsodium first:
+### Example: Load the native libsodium library
 
 ```java
-    private static String libraryPath = null;
+private static String libraryPath = null;
 
-    if (Platform.isMac())
-    {
-        // MacOS
-        libraryPath = "/usr/local/lib/libsodium.dylib";
-        libraryPath = libraryPath;
-        logger.info("Library path in Mac: " + libraryPath);
-    }
-    else if (Platform.isWindows())
-    {
-        // Windows
-        libraryPath = "C:/libsodium/libsodium.dll";
-        logger.info("Library path in Windows: " + libraryPath);
-    }
-    else
-    {
-        // Linux
-        libraryPath = "/usr/local/lib/libsodium.so";
-        logger.info("Library path: " + libraryPath);
-    }
-    
-    logger.info("loading libsodium...");
-    SodiumLibrary.setLibraryPath(libraryPath);
-    // To check the native library is actually loaded, print the version of 
-    // native sodium library
-    String v = SodiumLibrary.libsodiumVersionString();
-    logger.info("libsodium version: " + v);
+if (Platform.isMac())
+{
+    // MacOS
+    libraryPath = "/usr/local/lib/libsodium.dylib";
+    libraryPath = libraryPath;
+    logger.info("Library path in Mac: " + libraryPath);
+}
+else if (Platform.isWindows())
+{
+    // Windows
+    libraryPath = "C:/libsodium/libsodium.dll";
+    logger.info("Library path in Windows: " + libraryPath);
+}
+else
+{
+    // Linux
+    libraryPath = "/usr/local/lib/libsodium.so";
+    logger.info("Library path: " + libraryPath);
+}
+
+logger.info("loading libsodium...");
+SodiumLibrary.setLibraryPath(libraryPath);
+// To check the native library is actually loaded, print the version of 
+// native sodium library
+String v = SodiumLibrary.libsodiumVersionString();
+logger.info("libsodium version: " + v);
 }
 ```
 If the library could not be loaded Java's ```RuntimeException``` will be thrown.
@@ -251,7 +251,7 @@ Please look at ```TestInitializeLibrary.java``` to see how the library can be in
 public static String libsodiumVersionString()
 ```
 
-### Example:
+### Example: Print libsodium version
 
 Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
 ```java
@@ -281,7 +281,7 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
  public static byte[] randomBytes(int size)
 ```
 
-### Example
+### Example: Generate random data
 
 Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
 
@@ -350,37 +350,37 @@ public static byte[] crytoSecretBoxEasy(byte[] message, byte[] nonce, byte[] key
 public static byte[] cryptoSecretBoxOpenEasy(byte[] cipherText,byte[] nonce, byte[] key)
 ```
 
-### Example
+### Example: Encrypt and Decrypt a message
 
 Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
 
 ```java
- // don't forget to load the libsodium library first
+// don't forget to load the libsodium library first
 
-    String message = "This is a message";
+String message = "This is a message";
 
-    // generate nonce
-    long nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes();
-    byte[] nonceBytes = SodiumLibrary.randomBytes((int) nonceBytesLength);
-    byte[] messageBytes = message.getBytes();
+// generate nonce
+long nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes();
+byte[] nonceBytes = SodiumLibrary.randomBytes((int) nonceBytesLength);
+byte[] messageBytes = message.getBytes();
 
-    // generate the encryption key
-    byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
+// generate the encryption key
+byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
 
-    // encrypt
-    byte[] cipherText = SodiumLibrary.cryptoSecretBoxEasy(messageBytes, nonceBytes, key);
-    
-    // now decrypt
-    byte[] decryptedMessageBytes = SodiumLibrary.cryptoSecretBoxOpenEasy(cipherText, nonceBytes, key);
-    String decryptedMessage;
-    try
-    {
-        decryptedMessage = new String(decryptedMessageBytes, "UTF-8");
-        System.out.println("Decrypted message: " + decryptedMessageBytes);
-    } catch (UnsupportedEncodingException e)
-    {
-        e.printStackTrace();
-    }
+// encrypt
+byte[] cipherText = SodiumLibrary.cryptoSecretBoxEasy(messageBytes, nonceBytes, key);
+
+// now decrypt
+byte[] decryptedMessageBytes = SodiumLibrary.cryptoSecretBoxOpenEasy(cipherText, nonceBytes, key);
+String decryptedMessage;
+try
+{
+    decryptedMessage = new String(decryptedMessageBytes, "UTF-8");
+    System.out.println("Decrypted message: " + decryptedMessageBytes);
+} catch (UnsupportedEncodingException e)
+{
+    e.printStackTrace();
+}
 ```
 
 ## Public-key cryptography
@@ -398,7 +398,7 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
  public static SodiumKeyPair cryptoBoxKeyPair()
 ``` 
 
-### Example
+### Example: Generate key pair
 
 ```java
 
@@ -411,7 +411,6 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
  String hexPrivateKey = SodiumUtils.binary2Hex(privateKey);
 ```
 
-### Example: Alice (sender) Encrypts with Bob's (recipient) public key and creates authentication tag with her private key
 
 ```java
 /**
@@ -420,20 +419,18 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
  * 
  * Parameters:
  *   message            The message to encrypt
- *   nonce              SodiumLibrary.crytoBoxNonceBytes() bytes of nonce. It must be preserved 
- *                      because it will be needed during decryption
+ *   nonce              SodiumLibrary.crytoBoxNonceBytes() bytes of nonce. 
+ *                      It must be preserved because it will be needed during decryption
  *   recipientPublicKey Recipient's public key for encrypting the message
  *   senderPrivateKey   Sender's private key for creating authentication tag
  *
- * Return:
+ * Returns:
  *    encrypted message as an array of bytes
  */
-public static byte[] cryptoBoxEasy(byte[] message, 
+ public static byte[] cryptoBoxEasy(byte[] message, 
     byte[] nonce
     byte[] recipientPublicKey, byte[] senderPrivateKey) throws SodiumLibraryException
 ```            
-
-### Example: Bob (recipient) verifies with Alice's (sender) public key and decrypts with his public key
 
 ```java
 /**
@@ -450,18 +447,133 @@ public static byte[] cryptoBoxEasy(byte[] message,
  * Decrypted message as an array of bytes.
  * In case of error SodiumLibraryException() run time exception will be thrown 
  */
-public static byte[] cryptoBoxOpenEasy(byte[] cipherText,
+ public static byte[] cryptoBoxOpenEasy(byte[] cipherText,
     byte[]nonce, 
     byte[] senderPublicKey, byte[] recipientPrivateKey) throws SodiumLibraryException
 ```
 
+```java
+/**
+ * Encrypts a message with recipient's public key.
+ * 
+ * Usage: Alice can anonymously send a message to Bob by encrypting the message 
+ * with his public key.
+ * 
+ * Parameters:
+ *  message           The message bytes to encrypt
+ * recipientPublicKey Recipient's public key 
+ *
+ * Rreturn:
+ * Encrypted message bytes. The length of the cipher text will be 
+ * SodiumLibrary#cryptoBoxSealBytes() + message.length
+ *
+ * Tthrows SodiumLibraryException on error
+ */
+ public static byte[] cryptoBoxSeal(byte[] message, byte[] recipientPublicKey) 
+    throws SodiumLibraryException
+```
+
+```java
+/**
+ * Decrypts a ciphertext using recipient's  key pair.
+ * 
+ * Only the recipient can decrypt the message with his private key but the 
+ * recipient can not identify the sender.
+ * 
+ * Parameters:
+ *  cipherText Ciphertext to decrypt
+ *  pk Recipient's public key
+ *  sk Recipient's private Key
+ *
+ * Returns:
+ * Decrypted plaintext bytes. 
+ * @throws SodiumLibraryException on error
+ */
+public static byte[] cryptoBoxSealOpen(byte[] cipherText,byte[] pk, byte[] sk) throws SodiumLibraryException
+```
+
+### Example: Alice shares secret with Bob, Bob verifies and decrypt it
+
+1. Alice generates her key pair
+2. Bob generate  his key pair
+3. Alice (sender) Encrypts a message with Bob's (recipient) public key and creates authentication tag with her private key
+4. Bob (recipient) verifies the message with Alice's (sender) public key and decrypts with his private key
+
+```java
+// Alice generates key pair
+SodiumKeyPair aliceKeyPair = SodiumLibrary.cryptoBoxKeyPair();
+byte[] alicePublicKey = aliceKeyPair.getPublicKey();
+byte[] alicePrivateKey = aliceKeyPair.getPrivateKey();
+
+// Bob generates key pair
+SodiumKeyPair bobKeyPair = SodiumLibrary.cryptoBoxKeyPair();
+byte[] bobPublicKey = bobKeyPair.getPublicKey();
+byte[] bobPrivateKey = bobKeyPair.getPrivateKey();
+
+// Generate nonce
+byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoBoxNonceBytes());
+
+String secretMessage = "Hi Bob, This is Alice";
+// Alice encrypts the message with Bob's public key, creates authentication tag
+// with her private key
+byte[] cipherText = SodiumLibrary.cryptoBoxEasy(
+    secretMessage.getBytes(), nonce, 
+    bobPublicKey,
+    alicePrivateKey);
+String cipherHex = SodiumUtils.binary2Hex(cipherText);
+logger.info("Ciphertext: " + cipherHex);
+
+// Bob Verifies with Alice's public key and decrypts ciphertext with his Private key
+byte[] decrypted = SodiumLibrary.cryptoBoxOpenEasy(
+        cipherText, nonce,
+        alicePublicKey,
+        bobPrivateKey);
+String decrypteString;
+try
+{
+    decrypteString = new String(decrypted, "UTF-8");
+    logger.info("decrypted: " + decrypteString);
+} catch (UnsupportedEncodingException e)
+{
+    e.printStackTrace();
+}
+```
+
 ### Example: Alice (sender) anonymously encrypts message with Bob's (recipient) public key
 
-TODO
+```java
+// Bob generates key pair
+SodiumKeyPair bobKeyPair = SodiumLibrary.cryptoBoxKeyPair();
+byte[] bobPublicKey = bobKeyPair.getPublicKey();
+byte[] bobPrivateKey = bobKeyPair.getPrivateKey();
+
+String secretMessage = "Hi Bob, This is Alice";
+// Alice encrypts with Bob's public key
+byte[] cipherText = SodiumLibrary.cryptoBoxSeal(secretMessage.getBytes(), bobPublicKey);
+String cipherHex = SodiumUtils.binary2Hex(cipherText);
+logger.info("Ciphertext: " + cipherHex);
+logger.info("Ciphertext length : " + cipherText.length);
+
+long ciperTextlength = SodiumLibrary.cryptoBoxSealBytes() + secretMessage.length();
+logger.info("length: " + ciperTextlength);
+```
 
 ### Example: Bob (recipient) decrypts the message with his private key
 
-TODO
+```java
+// Bob decrypts with his private key
+byte[] decrypted = SodiumLibrary.cryptoBoxSealOpen(cipherText, bobPublicKey, bobPrivateKey);
+
+try
+{
+    String decrypteString = new String(decrypted, "UTF-8");
+    logger.info("decrypted: " + decrypteString);
+} catch (UnsupportedEncodingException e)
+{
+    e.printStackTrace();
+}
+```
+
 
 ## Password hashing, key generation
 
@@ -500,7 +612,7 @@ public static byte[] cryptoPwhashArgon2i(byte[] passwd, byte[] salt) throws Sodi
 
 Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
 
-### Example:
+### Example: Derive key from password
 
 ```
   String passPhrase = "This is a passphrase";
@@ -547,7 +659,7 @@ public static String cryptoPwhashStr(byte[] password) throws SodiumLibraryExcept
 
 Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
 
-### Example:
+### Example: Dervice key from password as US-ASCII string
 
 ```
     String password = new String("বাংলা");
@@ -570,24 +682,24 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
  * Returns:
  *  true if the key can be verified, false otherwise
  */
-public static boolean cryptoPwhashStrVerify(String usAsciiKey, 
+ public static boolean cryptoPwhashStrVerify(String usAsciiKey, 
     byte[] password)
 ```
 
 Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
 
-### Example
-```
-  String password = new String("বাংলা");
-  // convert to UTF-8 encoded bytes
-  byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8); // requires jdk 1.7+
-  String key = SodiumLibrary.cryptoPwhashStr(passwordBytes);
-  // verify the password
-  boolean rc = SodiumLibrary.cryptoPwhashStrVerify(key, passwordBytes);
-  if (rc)
-  {
+### Example: Verify US-ASCII encoded string
+```java
+String password = new String("বাংলা");
+// convert to UTF-8 encoded bytes
+byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8); // requires jdk 1.7+
+String key = SodiumLibrary.cryptoPwhashStr(passwordBytes);
+// verify the password
+boolean rc = SodiumLibrary.cryptoPwhashStrVerify(key, passwordBytes);
+if (rc)
+{
     logger.info("Password is verified");
-  }
+}
 ```
 
 
