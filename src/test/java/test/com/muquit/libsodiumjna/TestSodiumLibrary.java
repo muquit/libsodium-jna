@@ -239,6 +239,35 @@ public class TestSodiumLibrary
 	    assertEquals(TestVectors.SECRET_BOX_DETACHED_MAC, macHex);
 	}
 	
+	// Test issue #1
+	@Test
+	public void testCryptoSecretBoxDetached2() throws SodiumLibraryException
+	{
+	    String messageStr = "This is a message";
+	    byte[] message = messageStr.getBytes();
+	    // generate key
+	    byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
+	    // generate nonce
+	    byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxNonceBytes());
+	    
+	    // encrypt
+	    SodiumSecretBox secretBox = SodiumLibrary.cryptoSecretBoxDetached(message,nonce,key);
+	    
+	    // decrypt
+	    byte[] decryptedBytes = SodiumLibrary.cryptoSecretBoxOpenDetached(secretBox, nonce, key);
+        try
+        {
+            String decryptedMessage = new String(decryptedBytes, "UTF-8");
+            logger.info("Decrypted message: " + decryptedMessage);
+            assertEquals(messageStr, decryptedMessage);
+        } catch (UnsupportedEncodingException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    
+	}
+	
 	@Test
 	public void testCryptoBoxEasy() throws SodiumLibraryException
 	{
