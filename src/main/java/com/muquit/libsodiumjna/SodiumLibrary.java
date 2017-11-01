@@ -262,8 +262,143 @@ public class SodiumLibrary
                 byte[] public_key, byte[] private_key);
     }
 
+        // Signing/Signed keys
+        long crypto_sign_secretkeybytes();
+        long crypto_sign_publickeybytes();
+        int crypto_sign_keypair(byte[] pk, byte[] sk);
+        int crypto_sign_ed25519_bytes();
+        int crypto_sign_bytes();
+        
+        // actual signing and verification operations of the Signing key, first detached mode, then combined mode
+        int crypto_sign_detached(byte[] sig, long siglen_p,
+        						byte[]  m, long mlen,
+        						byte[] sk);
+        
+        int crypto_sign_verify_detached(byte[] sig, byte[] m,
+                                    	long mlen, byte[] pk);
+        
+        int crypto_sign(byte[] sm, long smlen_p,
+        				byte[] m, long mlen,
+        				byte[] sk);
+        
+        int crypto_sign_open(byte[] m, long mlen_p,
+        					byte[] sm, long smlen,
+        					byte[] pk);
+
+        
+        // libsodium's generichash (blake2b), this function will only return outlen number of bytes
+        // key can be null and keylen can be 0
+        int crypto_generichash(byte[] out, int outlen,
+        		byte[] in, int inlen,
+        		byte[] key, long keylen);
+        
+        // key conversion from ED to Curve so that signed key can be used for encryption
+        int crypto_sign_ed25519_sk_to_curve25519(byte[] curveSK, byte[] edSK); // secret key conversion
+        int crypto_sign_ed25519_pk_to_curve25519(byte[] curvePK, byte[] edPK); // public key conversion
+    
+    }
+
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
+
+    public static byte[] cryptoSignOpen(byte[] sig, byte[] pk) throws SodiumLibraryException
+    {
+    	byte[] m = new byte[(int) sig.length];
+    	byte[] mlen = new byte[1];
+        int rc = sodium().crypto_sign_open(m, mlen[0], sig, (long) sig.length, pk);
+        if (rc == 0) { return m; }
+        return new byte[1];
+    }
+    
+    public static byte[] cryptoSign(byte[] m, byte[] sk) throws SodiumLibraryException
+    {
+        byte[] sm = new byte[sodium().crypto_sign_bytes()+m.length];
+        byte[] test = new byte[1];
+        int rc = sodium().crypto_sign(sm, test[0], m, m.length, sk);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_sign (combined mode, not detached) failed, returned " + rc + ", expected 0");
+        }
+        return sm;
+    }
+    
+    public static boolean cryptoSignVerifyDetached(byte[] sig, byte[] msg, byte[] pk) throws SodiumLibraryException
+    {
+        int rc = sodium().crypto_sign_verify_detached(sig, msg, (long) msg.length, pk);
+        if (rc == 0) { return true; }
+        if (rc == -1) { return false; }
+        throw new SodiumLibraryException("libsodium crypto_sign_verify_detached failed, returned " + rc + ", expected 0 (a match) or -1 (mismatched)");
+    }
+    
+    public static byte[] cryptoSignDetached(byte[] msg, byte[] sk) throws SodiumLibraryException
+    {
+        byte[] sig = new byte[sodium().crypto_sign_ed25519_bytes()];
+        int rc = sodium().crypto_sign_detached(sig, 0L, msg, msg.length, sk);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_sign_detached failed, returned " + rc + ", expected 0");
+        }
+        return sig;
+    }
+    
+   
+    
+    //implementation of Sodium's public key / secret key signing.
+    // a SodiumKeyPair is created and returned containing the secret signing key and the public key
+    // that has been signed by the private key. the secret key (64 bytes) is simply
+    // the 32 byte random seed that Sodium generated + the 32byte public key that was signed by the private key
+    public static SodiumKeyPair cryptoSignKeyPair() throws SodiumLibraryException
+    {
+        SodiumKeyPair kp = new SodiumKeyPair();
+        byte[] publicKey = new byte[(int) sodium().crypto_sign_publickeybytes()];
+        byte[] privateKey = new byte[(int) sodium().crypto_sign_secretkeybytes()];
+        int rc = sodium().crypto_sign_keypair(publicKey, privateKey);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_sign_keypair() failed, returned " + rc + ", expected 0");
+        }
+        kp.setPublicKey(publicKey);
+        kp.setPrivateKey(privateKey);
+        logger.info("pk len: " + publicKey.length);
+        logger.info("sk len: " + privateKey.length);
+        return kp;
+    }
+    
+    // libsodium's generichash (blake2b), this function will only return 'length' number of bytes of the hash
+    // this implementation does not expect key/key.length which blake does need, so we are setting them to null and 0
+    public static byte[] cryptoGenerichash(byte[] input, int length) throws SodiumLibraryException
+    {
+        byte[] hash = new byte[length];
+        int rc = sodium().crypto_generichash(hash, length, input, input.length, null, 0);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_generichash failed, returned " + rc + ", expected 0");
+        }
+        return hash;
+    }
+    
+    // key conversion from ED to Curve so that signed public key can be used for encryption - secret key conversion
+    public static byte[]cryptoSignEdSkTOcurveSk (byte[] edSK)  throws SodiumLibraryException {
+    	byte[] curveSK = new byte[(int) sodium().crypto_box_publickeybytes()];
+    	int rc = sodium().crypto_sign_ed25519_sk_to_curve25519(curveSK, edSK);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_generichash failed, returned " + rc + ", expected 0");
+        }   	
+    	return curveSK;    	
+    }
+    
+    // key conversion from ED to Curve so that signed public key can be used for encryption - secret key conversion
+    public static byte[]cryptoSignEdPkTOcurvePk (byte[] edPK)  throws SodiumLibraryException {
+    	byte[] curvePK = new byte[(int) sodium().crypto_box_publickeybytes()];
+    	int rc = sodium().crypto_sign_ed25519_pk_to_curve25519(curvePK, edPK);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_generichash failed, returned " + rc + ", expected 0");
+        }   	
+    	return curvePK;    	
+    }
+
 
     /**
      * @return version string of libsodium
