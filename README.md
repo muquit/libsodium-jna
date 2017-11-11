@@ -4,6 +4,7 @@
 - [Javadocs](#javadocs)
 - [Supported platforms](#supported-platforms)
 - [Requirements](#requirements)
+- [Version](#version)
 - [How to use](#how-to-use)
     - [Install native libsodium C library  first](#install-native-libsodium-c-library--first)
     - [Install ```libsodium-jna```](#install-libsodium-jna)
@@ -82,6 +83,11 @@ non-maven project.
 * Make sure native [libsodium](https://libsodium.org) is already installed in the system. This library does not come with native version of libsodium. *It is a good idea to compile and install [libsodium](https://libsodium.org) yourself instead of using one from the Internet*.
 
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
+
+# Version
+The current version of libsodium-jna is 1.0.3
+
+Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
 # How to use
 ## Install native libsodium C library  first
