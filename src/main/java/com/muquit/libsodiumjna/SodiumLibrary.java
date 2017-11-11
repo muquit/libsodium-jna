@@ -161,6 +161,7 @@ public class SodiumLibrary
          * see include/sodium/crypto_pwhash.h
          */
         int crypto_pwhash_alg_argon2i13();
+        int crypto_pwhash_alg_argon2id13(); // added in libsodium 1.0.15
         int crypto_pwhash_alg_default();
         int crypto_pwhash_saltbytes();
         int crypto_pwhash_strbytes();
@@ -479,22 +480,16 @@ public class SodiumLibrary
     }
     
     /**
-     * Derive a key using Argon2i password hashing scheme
+     * Derive a key using Argon2id password hashing scheme
      * <p>
      * The following is taken from <a href="https://download.libsodium.org/doc/password_hashing/">libsodium documentation</a>:
      * <blockquote>
      * Argon2 is optimized for the x86 architecture and exploits the cache and memory organization of the recent Intel 
-     *<br>
-     * and AMD processors. But its implementation remains portable and fast on other architectures.
-     *<p>
-     * Argon2 has two variants: Argon2d and Argon2i. Argon2i uses data-independent memory access, which is preferred 
-     * <br>
-     * for password hashing and password-based key derivation. Argon2i also makes multiple passes over the memory to 
-     * <br>
-     * protect from tradeoff attacks.
-     *</p>
-     * This is the variant implemented in Sodium since version 1.0.9.
-     * Argon2 is recommended over Scrypt if requiring libsodium &gt;= 1.0.9 is not a concern.
+     * and AMD processors. But its implementation remains portable and fast on other architectures. Argon2 has three 
+     * variants: Argon2d, Argon2i and Argon2id. Argon2i uses data-independent memory access, which is preferred for 
+     * password hashing and password-based key derivation. Argon2i also makes multiple passes over the memory to 
+     * protect from tradeoff attacks. Argon2id combines both.
+
      * </blockquote>
      * 
      * @param passwd Array of bytes of password
@@ -527,14 +522,15 @@ public class SodiumLibrary
         logger.info(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
         logger.info(">>> opslimit: " + sodium().crypto_pwhash_opslimit_interactive());
         logger.info(">>> memlimit: " +  sodium().crypto_pwhash_memlimit_interactive());
-        logger.info(">>> alg: " +  sodium().crypto_pwhash_alg_argon2i13());
+//        logger.info(">>> alg: " +  sodium().crypto_pwhash_alg_argon2i13());
+        logger.info(">>> alg: " +  sodium().crypto_pwhash_alg_argon2id13()); // libsodium 1.0.15
         
         int rc = sodium().crypto_pwhash(key, key.length, 
                 passwd, passwd.length,
                 salt,
                 sodium().crypto_pwhash_opslimit_interactive(),
                 sodium().crypto_pwhash_memlimit_interactive(),
-                sodium().crypto_pwhash_alg_argon2i13());
+                sodium().crypto_pwhash_alg_argon2id13());
         
         logger.info("crypto_pwhash returned: " + rc);
         if (rc != 0)
@@ -1044,6 +1040,11 @@ public class SodiumLibrary
     public static int cryptoPwhashAlgArgon2i13()
     {
         return sodium().crypto_pwhash_alg_argon2i13();
+    }
+
+    public static int cryptoPwhashAlgArgon2id13()
+    {
+        return sodium().crypto_pwhash_alg_argon2id13(); // added in libsodium 1.0.15
     }
     
     public static int cryptoPwhashAlgDefault()

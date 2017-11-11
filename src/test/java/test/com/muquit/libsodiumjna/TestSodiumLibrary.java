@@ -43,7 +43,7 @@ public class TestSodiumLibrary
 		else if (Platform.isWindows())
 		{
 			//libraryPath = "C:/libsodium/libsodium.dll";
-			libraryPath = "d:/muquit/libsodium-1.0.13/x64/Release/v141/dynamic/libsodium.dll";
+			libraryPath = "d:/muquit/libsodium-1.0.15/x64/Release/v141/dynamic/libsodium.dll";
 			logger.info("Library path in Windows: " + libraryPath);
 		}
 		else
@@ -75,7 +75,7 @@ public class TestSodiumLibrary
 	public void testLibSodiumVersion()
 	{
 		String version = SodiumLibrary.libsodiumVersionString();
-		assertEquals("1.0.13", version);
+		assertEquals("1.0.15", version);
 	}
 
 	@Test

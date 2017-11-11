@@ -5,4 +5,5 @@
 *.swp
 *.bak
 *.loadpath
+misc/gen_test_vectors
 /target/

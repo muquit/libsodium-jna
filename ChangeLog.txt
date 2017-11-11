@@ -1,8 +1,0 @@
-# v1.0.2
-# Update pom.xml, javadoc and documentation for maven central. 
-
-# v1.0.1
-
-* Throw SodiumLibraryException in case of error. Before RuntimeException was thrown for everything.
-  (Jan-31-2017)
-
