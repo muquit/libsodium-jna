@@ -260,7 +260,6 @@ public class SodiumLibrary
         int crypto_box_open_easy(byte[] decrypted, byte[] cipher_text,
                 long ct_len, byte[] nonce,
                 byte[] public_key, byte[] private_key);
-    }
 
         // Signing/Signed keys
         long crypto_sign_secretkeybytes();
