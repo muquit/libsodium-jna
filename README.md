@@ -78,14 +78,14 @@ The implementation is tested on the following platforms with libsodium v1.0.15 w
 * maven must be installed in order to create the jar file. However, it is possible to use the library in a 
 non-maven project.
 
-* [libsodium](https://libsodium.org) 1.0.11 or higher. libsodium-jna itself does not enforce version checking but make sure you are using libsodium v 1.0.11 or higher. 
+* [libsodium](https://libsodium.org) 1.0.11 or higher. libsodium-jna itself does not enforce version checking but make sure you are using libsodium v 1.0.11 or higher. Please note that the algorithm used in ```cryptoPwhashArgon2i()``` may change from version to version of libsodium, to make sure, please look at [ChangeLog](ChangeLog.md).
 
 * Make sure native [libsodium](https://libsodium.org) is already installed in the system. This library does not come with native version of libsodium. *It is a good idea to compile and install [libsodium](https://libsodium.org) yourself instead of using one from the Internet*.
 
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
 
 # Version
-The current version of libsodium-jna is 1.0.3, works with [libsodium](https://libsodium.org) 1.0.15
+The current version of libsodium-jna is 1.0.3 (updated on Nov-11-2017), works with [libsodium](https://libsodium.org) 1.0.15
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
