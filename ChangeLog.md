@@ -9,7 +9,7 @@
 
 # v1.0.3
 
-* Uses libsodium 1.0.15. libsodium 1.0.15 changed the default password hashig algorithm to Argon2id. Therefore, ```cryptoPwhashArgon2i()``` is updated to use ```crypto_pwhash_alg_argon2id13()```. 
+* Uses libsodium 1.0.15. libsodium 1.0.15 changed the default password hashing algorithm to Argon2id. Therefore, ```cryptoPwhashArgon2i()``` is updated to use ```crypto_pwhash_alg_argon2id13()```. 
 
 * Test Vectors are created for libsodium 1.0.15
 
