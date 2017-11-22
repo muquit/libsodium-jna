@@ -174,16 +174,16 @@ public class SodiumLibrary
         NativeLong crypto_pwhash_memlimit_sensitive();
         
         /* sodium/crypto_box.h */
-        long crypto_box_seedbytes();
-        long crypto_box_publickeybytes();
-        long crypto_box_secretkeybytes();
-        long crypto_box_noncebytes();
-        long crypto_box_macbytes();
-        long crypto_box_sealbytes();
+        NativeLong crypto_box_seedbytes();
+        NativeLong crypto_box_publickeybytes();
+        NativeLong crypto_box_secretkeybytes();
+        NativeLong crypto_box_noncebytes();
+        NativeLong crypto_box_macbytes();
+        NativeLong crypto_box_sealbytes();
 
         /* sodium/crypto_auth.h */
-        long crypto_auth_bytes();
-        long crypto_auth_keybytes();
+        NativeLong crypto_auth_bytes();
+        NativeLong crypto_auth_keybytes();
         
         int crypto_pwhash(byte[] key, long keylen, 
                 byte[] passwd, long passwd_len,
@@ -206,12 +206,12 @@ public class SodiumLibrary
                 byte[] password, long passwordLen);
         
         /* sodium/crypto_pwhash_scryptsalsa208sha256.h */
-        long crypto_pwhash_scryptsalsa208sha256_saltbytes();
+        NativeLong crypto_pwhash_scryptsalsa208sha256_saltbytes();
         
         /* Secret Key */
-        long  crypto_secretbox_keybytes();
-        long  crypto_secretbox_noncebytes();
-        long  crypto_secretbox_macbytes();        
+        NativeLong  crypto_secretbox_keybytes();
+        NativeLong  crypto_secretbox_noncebytes();
+        NativeLong  crypto_secretbox_macbytes();        
         
         int crypto_secretbox_easy(byte[] cipherText, 
                 byte[] message, long mlen, byte[] nonce,
@@ -379,7 +379,7 @@ public class SodiumLibrary
     
     // key conversion from ED to Curve so that signed public key can be used for encryption - secret key conversion
     public static byte[]cryptoSignEdSkTOcurveSk (byte[] edSK)  throws SodiumLibraryException {
-    	byte[] curveSK = new byte[(int) sodium().crypto_box_publickeybytes()];
+    	byte[] curveSK = new byte[sodium().crypto_box_publickeybytes().intValue()];
     	int rc = sodium().crypto_sign_ed25519_sk_to_curve25519(curveSK, edSK);
         if (rc != 0)
         {
@@ -390,7 +390,7 @@ public class SodiumLibrary
     
     // key conversion from ED to Curve so that signed public key can be used for encryption - secret key conversion
     public static byte[]cryptoSignEdPkTOcurvePk (byte[] edPK)  throws SodiumLibraryException {
-    	byte[] curvePK = new byte[(int) sodium().crypto_box_publickeybytes()];
+    	byte[] curvePK = new byte[sodium().crypto_box_publickeybytes().intValue()];
     	int rc = sodium().crypto_sign_ed25519_pk_to_curve25519(curvePK, edPK);
         if (rc != 0)
         {
@@ -460,7 +460,7 @@ public class SodiumLibrary
 
     public static byte[] cryptoPwhash(byte[] passwd, byte[] salt, long opsLimit, NativeLong memLimit, int algorithm) throws SodiumLibraryException
     {
-        byte[] key = new byte[(int) sodium().crypto_box_seedbytes()];
+        byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
         logger.info(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
         
         int rc = sodium().crypto_pwhash(key, key.length, 
@@ -518,7 +518,7 @@ public class SodiumLibrary
             throw new SodiumLibraryException("salt is " + salt.length + ", it must be" + saltLength + " bytes");
         }
 
-        byte[] key = new byte[(int) sodium().crypto_box_seedbytes()];
+        byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
         logger.info(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
         logger.info(">>> opslimit: " + sodium().crypto_pwhash_opslimit_interactive());
         logger.info(">>> memlimit: " +  sodium().crypto_pwhash_memlimit_interactive());
@@ -655,12 +655,12 @@ public class SodiumLibrary
      */
     public static byte[] cryptoPwhashScrypt(byte[] passwd, byte[] salt) throws SodiumLibraryException
     {
-        long salt_length = sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
-        if (salt.length != salt_length)
+        NativeLong salt_length = sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
+        if (salt.length != salt_length.intValue())
         {
             throw new SodiumLibraryException("salt is " + salt.length + ", it must be" + salt_length + " bytes");
         }
-        byte[] key = new byte[(int) sodium().crypto_box_seedbytes()];
+        byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
         int rc = sodium().crypto_pwhash_scryptsalsa208sha256(key, key.length, 
                 passwd, passwd.length,
                 salt,
@@ -679,12 +679,12 @@ public class SodiumLibrary
             Long opsLimit,
             NativeLong memLimit) throws SodiumLibraryException
     {
-           long salt_length = sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
-        if (salt.length != salt_length)
+        NativeLong salt_length = sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
+        if (salt.length != salt_length.intValue())
         {
             throw new SodiumLibraryException("salt is " + salt.length + ", it must be" + salt_length + " bytes");
         }
-        byte[] key = new byte[(int) sodium().crypto_box_seedbytes()];
+        byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
         int rc = sodium().crypto_pwhash_scryptsalsa208sha256(key, key.length, 
                 passwd, passwd.length,
                 salt,
@@ -714,12 +714,12 @@ public class SodiumLibrary
      */  
     public static byte[] cryptoSecretBoxEasy(byte[] message, byte[] nonce, byte[] key) throws SodiumLibraryException
     {
-        long nonce_length = sodium().crypto_secretbox_noncebytes();
+        int nonce_length = sodium().crypto_secretbox_noncebytes().intValue();
         if (nonce_length != nonce.length)
         {
             throw new SodiumLibraryException("nonce is " + nonce.length + ", it must be" + nonce_length + " bytes");
         }
-        byte[] cipherText = new byte[(int) (sodium().crypto_box_macbytes() + message.length)];
+        byte[] cipherText = new byte[(sodium().crypto_box_macbytes().intValue() + message.length)];
 
         int rc = sodium().crypto_secretbox_easy(cipherText,message,message.length,nonce,key);
         if (rc != 0)
@@ -773,17 +773,17 @@ public class SodiumLibrary
     */
     public static byte[] cryptoSecretBoxOpenEasy(byte[] cipherText,byte[] nonce, byte[] key) throws SodiumLibraryException
     {
-        if (key.length != sodium().crypto_secretbox_keybytes())
+        if (key.length != sodium().crypto_secretbox_keybytes().intValue())
         {
             throw new SodiumLibraryException("invalid key length " + key.length + " bytes");
         }
 
-        if (nonce.length != sodium().crypto_secretbox_noncebytes())
+        if (nonce.length != sodium().crypto_secretbox_noncebytes().intValue())
         {
             throw new SodiumLibraryException("invalid nonce length " + nonce.length + " bytes");
         }
 
-        byte[] decrypted = new byte[(int) (cipherText.length - sodium().crypto_box_macbytes())];
+        byte[] decrypted = new byte[(cipherText.length - sodium().crypto_box_macbytes().intValue())];
         int rc = sodium().crypto_secretbox_open_easy(decrypted,cipherText,cipherText.length,nonce,key);
         if (rc != 0)
         {
@@ -811,18 +811,18 @@ public class SodiumLibrary
     */
     public static SodiumSecretBox cryptoSecretBoxDetached(byte[] message, byte[] nonce, byte[] key) throws SodiumLibraryException
     {
-        if (key.length != sodium().crypto_secretbox_keybytes())
+        if (key.length != sodium().crypto_secretbox_keybytes().intValue())
         {
             throw new SodiumLibraryException("invalid key length " + key.length + " bytes");
         }
 
 
-        if (nonce.length != sodium().crypto_secretbox_noncebytes())
+        if (nonce.length != sodium().crypto_secretbox_noncebytes().intValue())
         {
             throw new SodiumLibraryException("invalid nonce length " + nonce.length + " bytes");
         }
         byte[] cipherText = new byte[message.length];
-        byte[] mac = new byte[(int) sodium().crypto_secretbox_macbytes()];
+        byte[] mac = new byte[(int) sodium().crypto_secretbox_macbytes().intValue()];
         
         int rc = sodium().crypto_secretbox_detached(cipherText,mac,message,message.length,nonce,key);
         if (rc != 0)
@@ -854,17 +854,17 @@ public class SodiumLibrary
     public static byte[] cryptoSecretBoxOpenDetached(SodiumSecretBox secretBox,
             byte[] nonce, byte[] key) throws SodiumLibraryException
     {
-        if (key.length != sodium().crypto_secretbox_keybytes())
+        if (key.length != sodium().crypto_secretbox_keybytes().intValue())
         {
             throw new SodiumLibraryException("invalid key length " + key.length + " bytes");
         }
 
-        if (nonce.length != sodium().crypto_secretbox_noncebytes())
+        if (nonce.length != sodium().crypto_secretbox_noncebytes().intValue())
         {
             throw new SodiumLibraryException("invalid nonce length " + nonce.length + " bytes");
         }
         byte[] mac = secretBox.getMac();
-        if (mac.length != sodium().crypto_secretbox_macbytes())
+        if (mac.length != sodium().crypto_secretbox_macbytes().intValue())
         {
             throw new SodiumLibraryException("invalid mac length " + mac.length + " bytes");
         }
@@ -896,9 +896,9 @@ public class SodiumLibrary
      */
     public static byte[] cryptoAuth(byte[] message, byte[] key) throws SodiumLibraryException
     {
-        byte[] mac = new byte[(int) sodium().crypto_auth_bytes()];
+        byte[] mac = new byte[sodium().crypto_auth_bytes().intValue()];
 
-        long keySize = sodium().crypto_auth_keybytes();
+        int keySize = sodium().crypto_auth_keybytes().intValue();
         if (key.length != keySize)
         {
             throw new SodiumLibraryException("Expected key size " + keySize + " bytes, but passed " + key.length + " bytes");
@@ -923,7 +923,7 @@ public class SodiumLibrary
      */
     public static boolean cryptoAuthVerify(byte[] mac, byte[] message, byte[] key) throws SodiumLibraryException
     {
-        long keySize = sodium().crypto_auth_keybytes();
+        int keySize = sodium().crypto_auth_keybytes().intValue();
         if (key.length != keySize)
         {
             throw new SodiumLibraryException("Expected key size " + keySize + " bytes, but passed " + key.length + " bytes");
@@ -952,8 +952,8 @@ public class SodiumLibrary
     public static SodiumKeyPair cryptoBoxKeyPair() throws SodiumLibraryException
     {
         SodiumKeyPair kp = new SodiumKeyPair();
-        byte[] publicKey = new byte[(int) sodium().crypto_box_publickeybytes()];
-        byte[] privateKey = new byte[(int) sodium().crypto_box_secretkeybytes()];
+        byte[] publicKey = new byte[sodium().crypto_box_publickeybytes().intValue()];
+        byte[] privateKey = new byte[sodium().crypto_box_secretkeybytes().intValue()];
         int rc = sodium().crypto_box_keypair(publicKey, privateKey);
         if (rc != 0)
         {
@@ -974,7 +974,7 @@ public class SodiumLibrary
      */
     public static byte[] cryptoPublicKey(byte[] privateKey) throws SodiumLibraryException
     {
-        byte[] publicKey = new byte[(int) sodium().crypto_box_publickeybytes()];
+        byte[] publicKey = new byte[sodium().crypto_box_publickeybytes().intValue()];
         int rc = sodium().crypto_scalarmult_base(publicKey,privateKey);
         if (rc != 0)
         {
@@ -983,48 +983,48 @@ public class SodiumLibrary
         return publicKey;
     }
     
-    public static long cryptoBoxNonceBytes()
+    public static NativeLong cryptoBoxNonceBytes()
     {
         return sodium().crypto_box_noncebytes();
     }
     
-    public static long crytoBoxSeedBytes()
+    public static NativeLong crytoBoxSeedBytes()
     {
         return sodium().crypto_box_seedbytes();
     }
     
-    public static long crytoBoxPublicKeyBytes()
+    public static NativeLong crytoBoxPublicKeyBytes()
     {
         return sodium().crypto_box_publickeybytes();
     }
     
-    public static long crytoBoxSecretKeyBytes()
+    public static NativeLong crytoBoxSecretKeyBytes()
     {
        return sodium().crypto_box_secretkeybytes();
     }
     
-    public static long cryptoBoxMacBytes()
+    public static NativeLong cryptoBoxMacBytes()
     {
         return sodium().crypto_box_macbytes();
     }
     
-    public static long cryptoBoxSealBytes()
+    public static NativeLong cryptoBoxSealBytes()
     {
         return sodium().crypto_box_sealbytes();
     }
     
     /* secret-key */
-    public static long cryptoSecretBoxKeyBytes()
+    public static NativeLong cryptoSecretBoxKeyBytes()
     {
         return sodium().crypto_secretbox_keybytes();
     }
     
-    public static long cryptoSecretBoxNonceBytes()
+    public static NativeLong cryptoSecretBoxNonceBytes()
     {
        return sodium().crypto_secretbox_noncebytes();
     }
     
-    public static long cryptoSecretBoxMacBytes()
+    public static NativeLong cryptoSecretBoxMacBytes()
     {
         return sodium().crypto_secretbox_macbytes();        
     }
@@ -1067,7 +1067,7 @@ public class SodiumLibrary
         return sodium().crypto_pwhash_memlimit_interactive();
     }
     
-    public static long cryptoPwHashScryptSalsa208Sha256SaltBytes()
+    public static NativeLong cryptoPwHashScryptSalsa208Sha256SaltBytes()
     {
         return sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
     }
@@ -1087,12 +1087,12 @@ public class SodiumLibrary
     public static byte[] cryptoBoxEasy(byte[] message, byte[] nonce,
             byte[] publicKey, byte[] privateKey) throws SodiumLibraryException
     {
-        long nonce_len = sodium().crypto_box_noncebytes();
-        if (nonce.length != nonce_len)
+        NativeLong nonce_len = sodium().crypto_box_noncebytes();
+        if (nonce.length != nonce_len.intValue())
         {
             throw new SodiumLibraryException("nonce is " + nonce.length + "bytes, it must be" + nonce_len + " bytes");
         }
-        byte[] cipherText = new byte[(int) (sodium().crypto_box_macbytes() + message.length)];
+        byte[] cipherText = new byte[(sodium().crypto_box_macbytes().intValue() + message.length)];
         int rc = sodium().crypto_box_easy(cipherText,
                 message,message.length,
                 nonce,
@@ -1121,12 +1121,12 @@ public class SodiumLibrary
     public static byte[] cryptoBoxOpenEasy(byte[] cipherText, byte[]nonce, 
             byte[] publicKey, byte[] privateKey) throws SodiumLibraryException
     {
-        long nonce_len = sodium().crypto_box_noncebytes();
-        if (nonce.length != nonce_len)
+        NativeLong nonce_len = sodium().crypto_box_noncebytes();
+        if (nonce.length != nonce_len.intValue())
         {
             throw new SodiumLibraryException("nonce is " + nonce.length + "bytes, it must be" + nonce_len + " bytes");
         }
-        byte[] decrypted = new byte[(int) (cipherText.length - sodium().crypto_box_macbytes())];
+        byte[] decrypted = new byte[(int) (cipherText.length - sodium().crypto_box_macbytes().intValue())];
         int rc = sodium().crypto_box_open_easy(decrypted, cipherText, 
                 cipherText.length, nonce, 
                 publicKey, privateKey);
@@ -1153,7 +1153,7 @@ public class SodiumLibrary
     public static byte[] cryptoBoxSeal(byte[] message, byte[] recipientPublicKey) throws SodiumLibraryException
     {
         logger.info("message len: " + message.length);
-        byte[] cipherText = new byte[(int) (sodium().crypto_box_sealbytes() + message.length)];
+        byte[] cipherText = new byte[(sodium().crypto_box_sealbytes().intValue() + message.length)];
         int rc = sodium().crypto_box_seal(cipherText, message, message.length, recipientPublicKey);
         if (rc != 0)
         {
@@ -1177,7 +1177,7 @@ public class SodiumLibrary
     */
     public static byte[] cryptoBoxSealOpen(byte[] cipherText,byte[] pk, byte[] sk) throws SodiumLibraryException
     {
-        byte[] decrypted = new byte[(int) (cipherText.length - sodium().crypto_box_sealbytes())];
+        byte[] decrypted = new byte[(int) (cipherText.length - sodium().crypto_box_sealbytes().intValue())];
         int rc = sodium().crypto_box_seal_open(decrypted, cipherText, cipherText.length, pk, sk);
         if (rc != 0)
         {

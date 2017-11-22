@@ -194,11 +194,11 @@ public class TestSodiumLibrary
 	@Test 
 	public void testCryptoSecretBoxEasyEcryptDecrypt() throws SodiumLibraryException
 	{
-		long nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes();
+		int nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes().intValue();
 		byte[] nonceBytes = SodiumLibrary.randomBytes((int) nonceBytesLength);
 		String message = "This is a message";
 		byte[] messageBytes = message.getBytes();
-		byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
+		byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes().intValue());
 		byte[] cipherText = SodiumLibrary.cryptoSecretBoxEasy(messageBytes, nonceBytes, key);
 		
 		// now decrypt
@@ -246,9 +246,9 @@ public class TestSodiumLibrary
 	    String messageStr = "This is a message";
 	    byte[] message = messageStr.getBytes();
 	    // generate key
-	    byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
+	    byte[] key = SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxKeyBytes().intValue());
 	    // generate nonce
-	    byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxNonceBytes());
+	    byte[] nonce = SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxNonceBytes().intValue());
 	    
 	    // encrypt
 	    SodiumSecretBox secretBox = SodiumLibrary.cryptoSecretBoxDetached(message,nonce,key);
@@ -313,7 +313,7 @@ public class TestSodiumLibrary
 		byte[] bobPrivateKey = bobKeyPair.getPrivateKey();
 		
 		// Generate nonce
-		byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoBoxNonceBytes());
+		byte[] nonce = SodiumLibrary.randomBytes(SodiumLibrary.cryptoBoxNonceBytes().intValue());
 
 		String secretMessage = "Hi Bob, This is Alice";
 		// Alice encrypts the message with Bob's public key
@@ -355,7 +355,7 @@ public class TestSodiumLibrary
 		logger.info("Ciphertext: " + cipherHex);
 		logger.info("Ciphertext length : " + cipherText.length);
 		
-		long ciperTextlength = SodiumLibrary.cryptoBoxSealBytes() + secretMessage.length();
+		long ciperTextlength = SodiumLibrary.cryptoBoxSealBytes().intValue() + secretMessage.length();
 		logger.info("length: " + ciperTextlength);
 
 		
@@ -429,7 +429,7 @@ public class TestSodiumLibrary
 	
 	private byte[] makeNonce()
 	{
-	    return SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxNonceBytes());
+	    return SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxNonceBytes().intValue());
 	}
 	
 	private byte[] generateKey(String password,byte[] salt) throws SodiumLibraryException
@@ -502,7 +502,7 @@ public class TestSodiumLibrary
 		logger.info(hexPrivateKey);
 		
 		// create nonce for encrypting private key
-		byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxNonceBytes());
+		byte[] nonce = SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxNonceBytes().intValue());
 		hex = SodiumUtils.binary2Hex(salt);
 		logger.info("Generated " + nonce.length + " bytes of nonce");
 		logger.info(hex);
