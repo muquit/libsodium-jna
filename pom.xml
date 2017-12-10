@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.muquit.libsodiumjna</groupId>
   <artifactId>libsodium-jna</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <name>com.muquit.libsodiumjna</name>
   <description>Java bindings for libsodium with Java Native Access (JNA)</description>
   <packaging>jar</packaging>
@@ -34,6 +34,19 @@
 	  <developerConnection>scm:git:ssh://github.com:muquit/libsodium-jna.git</developerConnection>
 	  <url>https://github.com/muquit/libsodium-jna</url>
 	</scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>Sonatype Nexus snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus release repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
   <build>
       <plugins>

@@ -70,6 +70,7 @@ The implementation is tested on the following platforms with libsodium v1.0.15 w
 | 64 bit MacOS X running Sierra and El Capitan | 64 bit JVM |
 | 64 bit Linux | 64 bit JVM |
 | 32 bit Linux | 32 bit JVM |
+| It is reported that it works on 32 bit Windows but I personally did not test that| 32 bit JVM |
 
 # Requirements
 
@@ -85,7 +86,7 @@ non-maven project.
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
 
 # Version
-The current version of libsodium-jna is 1.0.3 (updated on Nov-11-2017), works with [libsodium](https://libsodium.org) 1.0.15
+The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
@@ -134,7 +135,7 @@ Add the following block inside dependencies block:
     <dependency>
         <groupId>com.muquit.libsodiumjna</groupId>
         <artifactId>libsodium-jna</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </dependency>
 ```
 Note: If you do not use maven, look at the end of the document.
