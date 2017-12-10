@@ -5,6 +5,7 @@
   <version>1.0.4</version>
   <name>com.muquit.libsodiumjna</name>
   <description>Java bindings for libsodium with Java Native Access (JNA)</description>
+  <url>https://github.com/muquit/libsodium-jna</url>
   <packaging>jar</packaging>
 
   <properties>
