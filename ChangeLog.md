@@ -11,6 +11,7 @@
 # v1.0.4
 
 * Support 32 bit Windows.
+* Available in maven central.
 
 (Dec-10-2017)
 

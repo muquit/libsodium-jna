@@ -7,8 +7,8 @@
 - [Version](#version)
 - [How to use](#how-to-use)
     - [Install native libsodium C library  first](#install-native-libsodium-c-library--first)
-    - [Install ```libsodium-jna```](#install-libsodium-jna)
     - [Update your project's ```pom.xml```](#update-your-projects-pomxml)
+    - [If you want to Install ```libsodium-jna``` from trunk](#if-you-want-to-install-libsodium-jna-from-trunk)
 - [Supported APIs](#supported-apis)
     - [Version of sodium library](#version-of-sodium-library)
     - [Generating random data](#generating-random-data)
@@ -108,9 +108,23 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
   sudo ldconfig
 ```
 
-## Install ```libsodium-jna```
+## Update your project's ```pom.xml```
 
-At this time, *libsodium-jna* is not in maven central. Therefore, before using it, it must be installed first.
+Add the following block inside dependencies block:
+
+```
+    <!--  As of v1.0.4, libsodium-jna is in the maven central. -->
+    <dependency>
+        <groupId>com.muquit.libsodiumjna</groupId>
+        <artifactId>libsodium-jna</artifactId>
+        <version>1.0.4</version>
+    </dependency>
+```
+Note: If you do not use maven, look at the end of the document.
+
+## If you want to Install ```libsodium-jna``` from trunk
+
+Trunk usually contains the latest development code.
 
 ```
     git clone https://github.com/muquit/libsodium-jna.git
@@ -121,24 +135,6 @@ At this time, *libsodium-jna* is not in maven central. Therefore, before using i
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.
 
-## Update your project's ```pom.xml```
-
-Add the following block inside dependencies block:
-
-```
-    <!-- 
-     | libsodium-jna is not in the maven central yet (I am working on it). 
-     | So it has to be installed first at the system by typing: mvn clean install
-     | and most of all native libsodium must be installed first in the 
-     | system before using it.
-    -->
-    <dependency>
-        <groupId>com.muquit.libsodiumjna</groupId>
-        <artifactId>libsodium-jna</artifactId>
-        <version>1.0.4</version>
-    </dependency>
-```
-Note: If you do not use maven, look at the end of the document.
 
 # Supported APIs
 
