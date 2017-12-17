@@ -164,9 +164,9 @@ The following APIs are implemented at this time.
 |```crypto_secretbox_open_detached()```|```public static byte[] cryptoSecretBoxOpenDetached(SodiumSecretBox secretBox, byte[] nonce, byte[] key)```|Verifies and decrypts an encrypted message, authentication tag used in ```cryptoSecretBoxDetached()``` is needed|
 |```crypto_auth()```|```public static byte[] cryptoAuth(byte[] message, byte[] key)```|Computes an authentication tag for a message | 
 |```crypto_auth_verify()```|```public static boolean cryptoAuthVerify(byte[] mac, byte[] message, byte[] key)```|Verifies the authentication tag for a message|
-|```crypto_secretbox_keybytes()```|```public static long cryptoSecretBoxKeyBytes()```|Length of key|
-|```crypto_secretbox_noncebytes()```|```public static long cryptoSecretBoxNonceBytes()```|Length of nonce|
-|```crypto_secretbox_macbytes()```|```public static long cryptoSecretBoxMacBytes()```|Length of authentication code|
+|```crypto_secretbox_keybytes()```|```public static NativeLong cryptoSecretBoxKeyBytes()```|Length of key. The API will be changed to reutrn int in next version|
+|```crypto_secretbox_noncebytes()```|```public static NativeLong cryptoSecretBoxNonceBytes()```|Length of nonce. The API will be changed to reutrn int in next version|
+|```crypto_secretbox_macbytes()```|```public static NativeLong cryptoSecretBoxMacBytes()```|Length of authentication code. The API will be changed to reutrn int in next version|
 
 ## Public-key cryptography
 
@@ -201,7 +201,7 @@ The following APIs are implemented at this time.
 |```crypto_pwhash_saltbytes()```|```public static int cryptoPwhashSaltBytes()```|Length of salt|
 |```crypto_pwhash_opslimit_interactive()```|```public static long cryptoPwHashOpsLimitInteractive()```|-|
 |```crypto_pwhash_memlimit_interactive()```|```public static NativeLong cryptoPwHashMemLimitInterative()```|-|
-|```crypto_pwhash_scryptsalsa208sha256_saltbytes()```|```public static long cryptoPwHashScryptSalsa208Sha256SaltBytes()```|-|
+|```crypto_pwhash_scryptsalsa208sha256_saltbytes()```|```public static NativeLong cryptoPwHashScryptSalsa208Sha256SaltBytes()```|-|
 
 # APIs
 
