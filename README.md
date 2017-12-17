@@ -178,12 +178,12 @@ The following APIs are implemented at this time.
 |```crypto_box_open_easy()```|```public static byte[] cryptoBoxOpenEasy(byte[] cipherText, byte[]nonce, byte[] publicKey, byte[] privateKey)```|Verifies and decrypts an encrypted message produced by ```cryptoBoxEasy()```|
 |```crypto_box_seal()```|```public static byte[] cryptoBoxSeal(byte[] message, byte[] recipientPublicKey)```|Encrypts a message for a recipient with recipient's public key|
 |```crypto_box_seal_open()```|```public static byte[] cryptoBoxSealOpen(byte[] cipherText,byte[] pk, byte[] sk)```|Decrypts an encrypted message with the key pair public key and private key|
-|```crypto_box_noncebytes()```|```public static long cryptoBoxNonceBytes()```|Length of nonce|
-|```crypto_box_seedbytes()```| ```public static long crytoBoxSeedBytes()```|Length of key seed|
-|```crypto_box_publickeybytes()```|```public static long crytoBoxPublicKeyBytes()```|Length of public key|
-|```crypto_box_secretkeybytes()```|```public static long crytoBoxSecretKeyBytes()```|Length of private key|
-|```crypto_box_macbytes()```|```public static long cryptoBoxMacBytes()```|Length of mac|
-|```crypto_box_sealbytes()```|```public static long cryptoBoxSealBytes()```|Length of seal|
+|```crypto_box_noncebytes()```|```public static NativeLong cryptoBoxNonceBytes()```|Length of nonce. The API will be changed to reutrn int in next version|
+|```crypto_box_seedbytes()```| ```public static NativeLong crytoBoxSeedBytes()```|Length of key seed. The API will be changed to reutrn int in next version |
+|```crypto_box_publickeybytes()```|```public static NativeLong crytoBoxPublicKeyBytes()```|Length of public key. The API will be changed to reutrn int in next version|
+|```crypto_box_secretkeybytes()```|```public static NativeLong crytoBoxSecretKeyBytes()```|Length of private key. The API will be changed to reutrn int in next version|
+|```crypto_box_macbytes()```|```public static NativeLong cryptoBoxMacBytes()```|Length of mac. The API will be changed to reutrn int in next version|
+|```crypto_box_sealbytes()```|```public static NativeLong cryptoBoxSealBytes()```|Length of seal. The API will be changed to reutrn int in next version|
 
 ## Password hashing, Key generation
 
@@ -327,7 +327,7 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
  *
  * Parameters:
  *  message    message bytes to encrypt
- *  nonce      nonce bytes. Generate it by calling  public static long cryptoBoxNonceBytes()
+ *  nonce      nonce bytes. Generate it by calling  public static NativeLong cryptoBoxNonceBytes()
  *
  * Returns:
  *  Encrypted cipher text bytes 
@@ -367,12 +367,12 @@ Make sure to [Load the libsodium C Library first](#load-the-libsodium-c-library-
 String message = "This is a message";
 
 // generate nonce
-long nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes();
-byte[] nonceBytes = SodiumLibrary.randomBytes((int) nonceBytesLength);
+int nonceBytesLength = SodiumLibrary.cryptoSecretBoxNonceBytes().intValue();
+byte[] nonceBytes = SodiumLibrary.randomBytes(nonceBytesLength);
 byte[] messageBytes = message.getBytes();
 
 // generate the encryption key
-byte[] key = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoSecretBoxKeyBytes());
+byte[] key = SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxKeyBytes().intValue());
 
 // encrypt
 byte[] cipherText = SodiumLibrary.cryptoSecretBoxEasy(messageBytes, nonceBytes, key);
@@ -518,7 +518,8 @@ byte[] bobPublicKey = bobKeyPair.getPublicKey();
 byte[] bobPrivateKey = bobKeyPair.getPrivateKey();
 
 // Generate nonce
-byte[] nonce = SodiumLibrary.randomBytes((int) SodiumLibrary.cryptoBoxNonceBytes());
+// This API will be changed to return int in future version of libsodium-jna
+byte[] nonce = SodiumLibrary.randomBytes(SodiumLibrary.cryptoBoxNonceBytes().intValue());
 
 String secretMessage = "Hi Bob, This is Alice";
 // Alice encrypts the message with Bob's public key, creates authentication tag
@@ -738,7 +739,7 @@ cracking.
 * Generate cryptoSecretBoxNonceBytes() long nonce
 
 ```java
-  byte[] nonce = SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxNonceBytes());
+  byte[] nonce = SodiumLibrary.randomBytes(SodiumLibrary.cryptoSecretBoxNonceBytes().intValue());
 ```
 
 * Encrypt the private key 
