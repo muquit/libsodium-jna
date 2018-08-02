@@ -1,9 +1,11 @@
 .project
+.idea
 .classpath
 .settings/
 *.tmp
 *.swp
 *.bak
 *.loadpath
+*.iml
 misc/gen_test_vectors
 /target/

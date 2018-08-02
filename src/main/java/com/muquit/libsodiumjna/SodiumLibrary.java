@@ -359,8 +359,10 @@ public class SodiumLibrary
         }
         kp.setPublicKey(publicKey);
         kp.setPrivateKey(privateKey);
-        logger.info("pk len: " + publicKey.length);
-        logger.info("sk len: " + privateKey.length);
+        if (logger.isDebugEnabled()) {
+            logger.debug("pk len: " + publicKey.length);
+            logger.debug("sk len: " + privateKey.length);
+        }
         return kp;
     }
     
@@ -461,7 +463,6 @@ public class SodiumLibrary
     public static byte[] cryptoPwhash(byte[] passwd, byte[] salt, long opsLimit, NativeLong memLimit, int algorithm) throws SodiumLibraryException
     {
         byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
-        logger.info(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
         
         int rc = sodium().crypto_pwhash(key, key.length, 
                 passwd, passwd.length,
@@ -469,8 +470,12 @@ public class SodiumLibrary
                 opsLimit,
                 memLimit,
                 algorithm);
-        
-        logger.info("crypto_pwhash returned: " + rc);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
+            logger.debug("crypto_pwhash returned: " + rc);
+        }
+
         if (rc != 0)
         {
             throw new SodiumLibraryException("cryptoPwhash libsodium crypto_pwhash failed, returned " + rc + ", expected 0");
@@ -519,11 +524,6 @@ public class SodiumLibrary
         }
 
         byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
-        logger.info(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
-        logger.info(">>> opslimit: " + sodium().crypto_pwhash_opslimit_interactive());
-        logger.info(">>> memlimit: " +  sodium().crypto_pwhash_memlimit_interactive());
-//        logger.info(">>> alg: " +  sodium().crypto_pwhash_alg_argon2i13());
-        logger.info(">>> alg: " +  sodium().crypto_pwhash_alg_argon2id13()); // libsodium 1.0.15
         
         int rc = sodium().crypto_pwhash(key, key.length, 
                 passwd, passwd.length,
@@ -531,8 +531,16 @@ public class SodiumLibrary
                 sodium().crypto_pwhash_opslimit_interactive(),
                 sodium().crypto_pwhash_memlimit_interactive(),
                 sodium().crypto_pwhash_alg_argon2id13());
-        
-        logger.info("crypto_pwhash returned: " + rc);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
+            logger.debug(">>> opslimit: " + sodium().crypto_pwhash_opslimit_interactive());
+            logger.debug(">>> memlimit: " +  sodium().crypto_pwhash_memlimit_interactive());
+//        logger.debug(">>> alg: " +  sodium().crypto_pwhash_alg_argon2i13());
+            logger.debug(">>> alg: " +  sodium().crypto_pwhash_alg_argon2id13()); // libsodium 1.0.15
+            logger.debug("crypto_pwhash returned: " + rc);
+        }
+
         if (rc != 0)
         {
             throw new SodiumLibraryException("cryptoPwhashArgon2i libsodium crypto_pwhash failed, returned " + rc + ", expected 0");
@@ -666,8 +674,11 @@ public class SodiumLibrary
                 salt,
                 sodium().crypto_pwhash_opslimit_interactive(),
                 sodium().crypto_pwhash_memlimit_interactive());
-        
-        logger.info("crypto_pwhash_scryptsalsa208sha256 returned: " + rc);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("crypto_pwhash_scryptsalsa208sha256 returned: " + rc);
+        }
+
         if (rc != 0)
         {
             throw new SodiumLibraryException("libsodium crypto_pwhash_scryptsalsa208sha256() failed, returned " + rc + ", expected 0");
@@ -689,8 +700,11 @@ public class SodiumLibrary
                 passwd, passwd.length,
                 salt,
                 opsLimit, memLimit);
-        
-        logger.info("crypto_pwhash_scryptsalsa208sha256 returned: " + rc);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("crypto_pwhash_scryptsalsa208sha256 returned: " + rc);
+        }
+
         if (rc != 0)
         {
             throw new SodiumLibraryException("libsodium crypto_pwhash_scryptsalsa208sha256() failed, returned " + rc + ", expected 0");
@@ -961,8 +975,12 @@ public class SodiumLibrary
         }
         kp.setPublicKey(publicKey);
         kp.setPrivateKey(privateKey);
-        logger.info("pk len: " + publicKey.length);
-        logger.info("sk len: " + privateKey.length);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("pk len: " + publicKey.length);
+            logger.debug("sk len: " + privateKey.length);
+        }
+
         return kp;
     }
     
@@ -1152,7 +1170,10 @@ public class SodiumLibrary
      */
     public static byte[] cryptoBoxSeal(byte[] message, byte[] recipientPublicKey) throws SodiumLibraryException
     {
-        logger.info("message len: " + message.length);
+        if (logger.isDebugEnabled()) {
+            logger.debug("message len: " + message.length);
+        }
+
         byte[] cipherText = new byte[(sodium().crypto_box_sealbytes().intValue() + message.length)];
         int rc = sodium().crypto_box_seal(cipherText, message, message.length, recipientPublicKey);
         if (rc != 0)
