@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
