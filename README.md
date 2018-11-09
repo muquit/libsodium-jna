@@ -74,7 +74,7 @@ The implementation is tested on the following platforms with libsodium v1.0.15 w
 
 # Requirements
 
-* jdk 1.7+
+* jdk 1.7+. The default `pom.xml` is for jdk upto 1.8. For [jdk11](https://jdk.java.net/11/), use `pom_java11.xml`
 
 * maven must be installed in order to create the jar file. However, it is possible to use the library in a 
 non-maven project.
@@ -131,6 +131,12 @@ Trunk usually contains the latest development code.
     cd libsodium-jna
     mvn clean install
     mvn test
+```
+To compile with [java 11](https://jdk.java.net/11/):
+
+```
+mvn -f pom_java11.xml clean install
+mvn -f pom_java11.xml test
 ```
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.

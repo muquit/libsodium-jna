@@ -42,7 +42,7 @@ public class SodiumLibrary
     * Set the absolute path of the libsodium shared library/DLL.
     *<p> 
     * This method 
-    * <b><font color="red">must</font></b> be called before calling any methods in libsodium-jna. Although JNA supports loading
+    * must be called before calling any methods in libsodium-jna. Although JNA supports loading
     * a shared library from path, libsodium-jna requires specifying the absolute
     * path to make sure that the exact library is being loaded.
     * For example, in Linux, it might be /usr/local/lib/libsodium.so, in Windows, 
