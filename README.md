@@ -1,51 +1,4 @@
-<!-- TOC -->
-
-- [Introduction](#introduction)
-- [Javadocs](#javadocs)
-- [Supported platforms](#supported-platforms)
-- [Requirements](#requirements)
-- [Version](#version)
-- [How to use](#how-to-use)
-    - [Install native libsodium C library  first](#install-native-libsodium-c-library--first)
-    - [Update your project's ```pom.xml```](#update-your-projects-pomxml)
-    - [If you want to Install ```libsodium-jna``` from trunk](#if-you-want-to-install-libsodium-jna-from-trunk)
-- [Supported APIs](#supported-apis)
-    - [Version of sodium library](#version-of-sodium-library)
-    - [Generating random data](#generating-random-data)
-    - [Secret-key cryptography](#secret-key-cryptography)
-    - [Public-key cryptography](#public-key-cryptography)
-    - [Password hashing, Key generation](#password-hashing-key-generation)
-- [APIs](#apis)
-    - [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
-        - [Example: Load the native libsodium library](#example-load-the-native-libsodium-library)
-    - [Version of sodium library](#version-of-sodium-library-1)
-        - [Example: Print libsodium version](#example-print-libsodium-version)
-    - [Generate random data](#generate-random-data)
-        - [Example: Generate random data](#example-generate-random-data)
-    - [Secret-key authenticated cryptography](#secret-key-authenticated-cryptography)
-        - [Encrypt a message with a key and a nonce](#encrypt-a-message-with-a-key-and-a-nonce)
-        - [Verify and decrypt the message](#verify-and-decrypt-the-message)
-        - [Example: Encrypt and Decrypt a message](#example-encrypt-and-decrypt-a-message)
-    - [Public-key cryptography](#public-key-cryptography-1)
-        - [Generate Key Pair](#generate-key-pair)
-        - [Example: Generate key pair](#example-generate-key-pair)
-        - [Example: Alice shares secret with Bob, Bob verifies and decrypt it](#example-alice-shares-secret-with-bob-bob-verifies-and-decrypt-it)
-        - [Example: Alice (sender) anonymously encrypts message with Bob's (recipient) public key](#example-alice-sender-anonymously-encrypts-message-with-bobs-recipient-public-key)
-        - [Example: Bob (recipient) decrypts the message with his private key](#example-bob-recipient-decrypts-the-message-with-his-private-key)
-    - [Password hashing, key generation](#password-hashing-key-generation)
-        - [Derive Key from password](#derive-key-from-password)
-        - [Example: Derive key from password](#example-derive-key-from-password)
-        - [Derive US-ASCII encoded key from password for storing](#derive-us-ascii-encoded-key-from-password-for-storing)
-        - [Example: Dervice key from password as US-ASCII string](#example-dervice-key-from-password-as-us-ascii-string)
-        - [Verify Stored US-ASCII encoded key with password](#verify-stored-us-ascii-encoded-key-with-password)
-        - [Example: Verify US-ASCII encoded string](#example-verify-us-ascii-encoded-string)
-    - [How to encrypt a private key](#how-to-encrypt-a-private-key)
-        - [Encrypting the private key](#encrypting-the-private-key)
-        - [Decrypting the private key](#decrypting-the-private-key)
-- [If your project is not a maven project](#if-your-project-is-not-a-maven-project)
-- [License is MIT](#license-is-mit)
-
-<!-- /TOC -->
+<!-- TOC -->autoauto- [Introduction](#introduction)auto- [Javadocs](#javadocs)auto- [Supported platforms](#supported-platforms)auto- [Requirements](#requirements)auto- [Version](#version)auto- [How to use](#how-to-use)auto    - [Install native libsodium C library  first](#install-native-libsodium-c-library--first)auto    - [Update your project's ```pom.xml```](#update-your-projects-pomxml)auto    - [If you want to Install ```libsodium-jna``` from trunk](#if-you-want-to-install-libsodium-jna-from-trunk)auto- [Supported APIs](#supported-apis)auto    - [Version of sodium library](#version-of-sodium-library)auto    - [Generating random data](#generating-random-data)auto    - [Secret-key cryptography](#secret-key-cryptography)auto    - [Public-key cryptography](#public-key-cryptography)auto    - [Password hashing, Key generation](#password-hashing-key-generation)auto- [APIs](#apis)auto    - [Load the libsodium C Library first](#load-the-libsodium-c-library-first)auto        - [Example: Load the native libsodium library](#example-load-the-native-libsodium-library)auto    - [Version of sodium library](#version-of-sodium-library-1)auto        - [Example: Print libsodium version](#example-print-libsodium-version)auto    - [Generate random data](#generate-random-data)auto        - [Example: Generate random data](#example-generate-random-data)auto    - [Secret-key authenticated cryptography](#secret-key-authenticated-cryptography)auto        - [Encrypt a message with a key and a nonce](#encrypt-a-message-with-a-key-and-a-nonce)auto        - [Verify and decrypt the message](#verify-and-decrypt-the-message)auto        - [Example: Encrypt and Decrypt a message](#example-encrypt-and-decrypt-a-message)auto    - [Public-key cryptography](#public-key-cryptography-1)auto        - [Generate Key Pair](#generate-key-pair)auto        - [Example: Generate key pair](#example-generate-key-pair)auto        - [Example: Alice shares secret with Bob, Bob verifies and decrypt it](#example-alice-shares-secret-with-bob-bob-verifies-and-decrypt-it)auto        - [Example: Alice (sender) anonymously encrypts message with Bob's (recipient) public key](#example-alice-sender-anonymously-encrypts-message-with-bobs-recipient-public-key)auto        - [Example: Bob (recipient) decrypts the message with his private key](#example-bob-recipient-decrypts-the-message-with-his-private-key)auto    - [Password hashing, key generation](#password-hashing-key-generation)auto        - [Derive Key from password](#derive-key-from-password)auto        - [Example: Derive key from password](#example-derive-key-from-password)auto        - [Derive US-ASCII encoded key from password for storing](#derive-us-ascii-encoded-key-from-password-for-storing)auto        - [Example: Dervice key from password as US-ASCII string](#example-dervice-key-from-password-as-us-ascii-string)auto        - [Verify Stored US-ASCII encoded key with password](#verify-stored-us-ascii-encoded-key-with-password)auto        - [Example: Verify US-ASCII encoded string](#example-verify-us-ascii-encoded-string)auto    - [How to encrypt a private key](#how-to-encrypt-a-private-key)auto        - [Encrypting the private key](#encrypting-the-private-key)auto        - [Decrypting the private key](#decrypting-the-private-key)auto- [If your project is not a maven project](#if-your-project-is-not-a-maven-project)auto- [License is MIT](#license-is-mit)autoauto<!-- /TOC -->
 
 # Introduction
 
@@ -62,7 +15,7 @@ Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](h
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available. 
 
-The implementation is tested on the following platforms with libsodium v1.0.15 with JVM 1.7 and 1.8.
+The implementation is tested on the following platforms with libsodium v1.0.15 with JVM 1.7, 1.8 and [jdk11](https://jdk.java.net/11/)
 
 | Platform | JVM |
 |----------|-----|
@@ -86,7 +39,7 @@ non-maven project.
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
 
 # Version
-The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15
+The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
