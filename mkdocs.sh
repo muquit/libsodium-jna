@@ -3,6 +3,7 @@
 # Use markdown_helper gem to generate docs. It's much nicer than using 
 # vscode's broken TOC generator plugin.
 # muquit@muquit.com Dec-22-2018 
+# use markdown-helper v2.1.0 - Dec-22-2018. TOC generation is much simpler
 ########################################################################
 MH="markdown_helper"
 RM="/bin/rm -f"
@@ -32,27 +33,35 @@ write_md_line()
     echo "" >> ${TF}
 }
 
+write_toc_line()
+{
+    echo "@[:page_toc](## Page Contents)" >> $TF
+    echo "" >> ${TF}
+}
+
 write_footer()
 {
     echo "---" >> ${TF}
     echo "Created with [markdown_helper](https://github.com/BurdetteLamar/markdown_helper)" >> ${TF}
     echo "" >> ${TF}
 }
+
+cleanup()
+{
+    ${RM} ${TF}
+}
 #-----------------------------------------
 
 gen_license_file
-write_md_line "toc.md"
+write_toc_line
 
 for file in ./*.md
 do
     FILENAME=$(basename $file)
     write_md_line "${FILENAME}"
 done
-write_footer
 
-${MH} create_page_toc --pristine ${TF} TOC.MD
-${MH} include --pristine ${TF} ALL.MD
-${MH} create_page_toc --pristine ALL.MD TOC.MD
+write_footer
 ${MH} include --pristine ${TF} ../README.md
-${RM} TOC.MD ALL.MD ${TF}
+cleanup
 popd
