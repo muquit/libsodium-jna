@@ -53,6 +53,6 @@ write_footer
 ${MH} create_page_toc --pristine ${TF} TOC.MD
 ${MH} include --pristine ${TF} ALL.MD
 ${MH} create_page_toc --pristine ALL.MD TOC.MD
-${MH} include --pristine ${TF} ../README_GENERATED.md
+${MH} include --pristine ${TF} ../README.md
 ${RM} TOC.MD ALL.MD ${TF}
 popd
