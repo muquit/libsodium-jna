@@ -42,7 +42,7 @@ write_toc_line()
 write_footer()
 {
     echo "---" >> ${TF}
-    echo "Created with [markdown_helper](https://github.com/BurdetteLamar/markdown_helper) with mkdocs.sh" >> ${TF}
+    echo "Created with [markdown_helper](https://github.com/BurdetteLamar/markdown_helper) with [mkdocs.sh](mkdocs.sh)" >> ${TF}
     echo "" >> ${TF}
 }
 
