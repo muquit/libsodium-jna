@@ -835,5 +835,5 @@ central manually and add them to your build path
 
 
 ---
-Created with [markdown_helper](https://github.com/BurdetteLamar/markdown_helper)
+Created with [markdown_helper](https://github.com/BurdetteLamar/markdown_helper) with mkdocs.sh
 
