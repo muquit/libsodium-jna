@@ -53,7 +53,7 @@ Bug reports, suggestions are always welcome!
 If you add support to more libsodium APIs, please send me a pull request. If yo do so, please do not forget   to update the documentation add unit tests. If you need to generate test vectors, please look at ```misc/     gen_test_vectors.c```
 
 # Javadocs
-Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](https://muquit.github.io/      libsodium-jna/)
+Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](https://muquit.github.io/libsodium-jna/)
 
 # Supported platforms
 
