@@ -59,7 +59,7 @@ Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](h
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 with JVM 1.7, 1.8 and          [jdk11](https://jdk.java.net/11/)
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.17 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
 
 | Platform | JVM |
 |----------|-----|
@@ -84,7 +84,7 @@ non-maven project.
 
 
 # Version
-The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16
+The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16, 1.0.17
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
