@@ -46,7 +46,7 @@ mvn -f pom_java11.xml clean install
 mvn -f pom_java11.xml test
 ```
 
-* Please note: one unit test which checks the version of libsodium will fail if you use libsodium version > 1.0.15.*
+* Please note: one unit test which checks the version of libsodium will fail if you use libsodium version > 1.0.15 *
 Please update the Unit test to match your version of libsodium.
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.
