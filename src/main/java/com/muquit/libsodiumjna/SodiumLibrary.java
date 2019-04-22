@@ -121,13 +121,13 @@ public class SodiumLibrary
         final Sodium sodium = SingletonHelper.instance;
         
         if (!initialized) {
-        	initialized = true;
         	int rc = sodium.sodium_init();
         	if (rc == -1)
         	{
         		logger.error("ERROR: sodium_init() failed: " + rc);
         		throw new RuntimeException("sodium_init() failed, rc=" + rc);
         	}
+        	initialized = true;
         }
         return sodium;
     }
