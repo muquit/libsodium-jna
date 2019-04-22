@@ -30,7 +30,8 @@ public class SodiumLibrary
     private final static Logger logger = LoggerFactory.getLogger(SodiumLibrary.class);
     
     private static String libPath;
-    
+    private static boolean initialized = false;
+
     private SodiumLibrary(){}
     
     public static void log(String msg)
@@ -42,7 +43,7 @@ public class SodiumLibrary
     * Set the absolute path of the libsodium shared library/DLL.
     *<p> 
     * This method 
-    * must be called before calling any methods in libsodium-jna. Although JNA supports loading
+    * <b><font color="red">must</font></b> be called before calling any methods in libsodium-jna. Although JNA supports loading
     * a shared library from path, libsodium-jna requires specifying the absolute
     * path to make sure that the exact library is being loaded.
     * For example, in Linux, it might be /usr/local/lib/libsodium.so, in Windows, 
@@ -116,13 +117,17 @@ public class SodiumLibrary
             logger.info("libpath not set, throw exception");
             throw new RuntimeException("Please set the absolute path of the libsodium libary by calling SodiumLibrary.setLibraryPath(path)");
         }
-        Sodium sodium = SingletonHelper.instance;
-        String h = Integer.toHexString(System.identityHashCode(sodium));
-        int rc = sodium.sodium_init();
-        if (rc == -1)
-        {
-            logger.error("ERROR: sodium_init() failed: " + rc);
-            throw new RuntimeException("sodium_init() failed, rc=" + rc);
+
+        final Sodium sodium = SingletonHelper.instance;
+        
+        if (!initialized) {
+        	initialized = true;
+        	int rc = sodium.sodium_init();
+        	if (rc == -1)
+        	{
+        		logger.error("ERROR: sodium_init() failed: " + rc);
+        		throw new RuntimeException("sodium_init() failed, rc=" + rc);
+        	}
         }
         return sodium;
     }
