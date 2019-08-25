@@ -2,14 +2,14 @@
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.17.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.18.tar.gz](https://download.libsodium.org/libsodium/releases/)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.17.tar.gz
-  cd libsodium-1.0.17
+  tar -xf libsodium-1.0.18.tar.gz
+  cd libsodium-1.0.18
   ./configure
   make && make check
   sudo make install

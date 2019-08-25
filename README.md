@@ -59,7 +59,7 @@ Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](h
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.17 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.18 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
 
 | Platform | JVM |
 |----------|-----|
@@ -84,7 +84,7 @@ non-maven project.
 
 
 # Version
-The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16, 1.0.17
+The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16, 1.0.17, 1.0.18
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
@@ -92,14 +92,14 @@ Please look at [ChangeLog](ChangeLog.md) for what is changed in the current vers
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.17.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.18.tar.gz](https://download.libsodium.org/libsodium/releases/)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.17.tar.gz
-  cd libsodium-1.0.17
+  tar -xf libsodium-1.0.18.tar.gz
+  cd libsodium-1.0.18
   ./configure
   make && make check
   sudo make install
