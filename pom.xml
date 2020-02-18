@@ -127,7 +127,7 @@
 	<dependency>
 		<groupId>net.java.dev.jna</groupId>
 		<artifactId>jna</artifactId>
-		<version>4.2.2</version>
+		<version>5.5.0</version>
 	</dependency>
 	    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
     <dependency>
