@@ -27,6 +27,21 @@ Add the following block inside dependencies block:
         <version>1.0.4</version>
     </dependency>
 ```
+**Update: Feb-18-2020**. libsodium-jna in Maven central uses Java Native Access v4.2.2. This version of
+JNA has issues with some version of Microsoft Windows e.g. it does not work in
+Windows Server 2019. If you are using libsodium-jna  from Maven in your
+project, please update the JNA version to 5.5.0 in your pom.xml as follows:
+
+```
+    <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+    <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>5.5.0</version>
+    </dependency>
+```
+
+
 Note: If you do not use maven, look at the end of the document.
 
 ## If you want to Install ```libsodium-jna``` from trunk
