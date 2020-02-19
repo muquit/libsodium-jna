@@ -136,7 +136,8 @@ Note: If you do not use maven, look at the end of the document.
 
 ## If you want to Install ```libsodium-jna``` from trunk
 
-Trunk usually contains the latest development code.
+Trunk contains the latest development code but mostly stable. I try not to
+check-in broken code.
 
 ```
     git clone https://github.com/muquit/libsodium-jna.git
