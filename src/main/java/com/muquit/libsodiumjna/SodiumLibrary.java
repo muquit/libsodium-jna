@@ -250,6 +250,7 @@ public class SodiumLibrary
         /* Public key authenticated encryption */
         int crypto_box_keypair(byte[] pk, byte[] sk);
         
+        int crypto_scalarmult(byte[] q, byte[] n, byte[] p);
        /**
         * Compute Public key from Private Key
         * @param pk - Public Key returns
