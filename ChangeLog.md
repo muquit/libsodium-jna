@@ -1,20 +1,12 @@
 
 <!-- TOC -->
 
-- [v1.0.5](#v105)
 - [v1.0.4](#v104)
 - [v1.0.3](#v103)
 - [v1.0.2](#v102)
 - [v1.0.1](#v101)
 
 <!-- /TOC -->
-
-# v1.0.5
-
-* Merge pull request for crypto_scalarmult_base(). Method is cryptoPublicKey()
-  to generate public key from corresponding private key.
-  (Oct-18-2020)
-
 
 # v1.0.4
 
