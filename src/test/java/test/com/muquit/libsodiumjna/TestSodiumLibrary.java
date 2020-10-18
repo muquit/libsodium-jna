@@ -76,7 +76,7 @@ public class TestSodiumLibrary
 	public void testLibSodiumVersion()
 	{
 		String version = SodiumLibrary.libsodiumVersionString();
-		assertEquals("1.0.15", version);
+		assertEquals("1.0.18", version);
 	}
 
 	@Test
@@ -520,6 +520,21 @@ public class TestSodiumLibrary
 		thrown.expect(SodiumLibraryException.class);
 		SodiumLibrary.cryptoSecretBoxOpenEasy(encryptedPrivateKey, nonce, key);
 	}
+	
+	@Test
+	public void testGenPublicKeyFromPrivateKey() throws SodiumLibraryException
+	{
+	    SodiumKeyPair kp = SodiumLibrary.cryptoBoxKeyPair();
+	    String publicKeyHex = SodiumUtils.binary2Hex(kp.getPublicKey());
+	    String privateKeyHex = SodiumUtils.binary2Hex(kp.getPrivateKey());
+	    logger.info("Public key: " + publicKeyHex);
+	    logger.info("Private key: " + privateKeyHex);
+	    byte[] publicKeyGenerated = SodiumLibrary.cryptoPublicKey(kp.getPrivateKey());
+	    String publicKeyGeneratedHex = SodiumUtils.binary2Hex(publicKeyGenerated);
+	    logger.info("Public key from private key: "+  publicKeyGeneratedHex);
+	    assertArrayEquals(publicKeyGenerated, kp.getPublicKey());
+	}	
+	
 
 	@After
 	public void doneTesting()
