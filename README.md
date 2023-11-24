@@ -5,7 +5,7 @@
 - [Requirements](#requirements)
 - [Version](#version)
 - [How to use](#how-to-use)
-  - [Install native libsodium C library  first](#install-native-libsodium-c-library-first)
+  - [Install native libsodium C library  first](#install-native-libsodium-c-library--first)
   - [Update your project's ```pom.xml```](#update-your-projects-pomxml)
   - [If you want to Install ```libsodium-jna``` from trunk](#if-you-want-to-install-libsodium-jna-from-trunk)
 - [Supported APIs](#supported-apis)
@@ -17,7 +17,7 @@
 - [APIs](#apis)
   - [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
     - [Example: Load the native libsodium library](#example-load-the-native-libsodium-library)
-  - [Version of sodium library](#version-of-sodium-library)
+  - [Version of sodium library](#version-of-sodium-library-1)
     - [Example: Print libsodium version](#example-print-libsodium-version)
   - [Generate random data](#generate-random-data)
     - [Example: Generate random data](#example-generate-random-data)
@@ -25,13 +25,13 @@
     - [Encrypt a message with a key and a nonce](#encrypt-a-message-with-a-key-and-a-nonce)
     - [Verify and decrypt the message](#verify-and-decrypt-the-message)
     - [Example: Encrypt and Decrypt a message](#example-encrypt-and-decrypt-a-message)
-  - [Public-key cryptography](#public-key-cryptography)
+  - [Public-key cryptography](#public-key-cryptography-1)
     - [Generate Key Pair](#generate-key-pair)
     - [Example: Generate key pair](#example-generate-key-pair)
     - [Example: Alice shares secret with Bob, Bob verifies and decrypt it](#example-alice-shares-secret-with-bob-bob-verifies-and-decrypt-it)
     - [Example: Alice (sender) anonymously encrypts message with Bob's (recipient) public key](#example-alice-sender-anonymously-encrypts-message-with-bobs-recipient-public-key)
     - [Example: Bob (recipient) decrypts the message with his private key](#example-bob-recipient-decrypts-the-message-with-his-private-key)
-  - [Password hashing, key generation](#password-hashing-key-generation)
+  - [Password hashing, key generation](#password-hashing-key-generation-1)
     - [Derive Key from password](#derive-key-from-password)
     - [Example: Derive key from password](#example-derive-key-from-password)
     - [Derive US-ASCII encoded key from password for storing](#derive-us-ascii-encoded-key-from-password-for-storing)
@@ -59,7 +59,7 @@ Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](h
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.18 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.19 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
 
 | Platform | JVM |
 |----------|-----|
@@ -84,7 +84,7 @@ non-maven project.
 
 
 # Version
-The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16, 1.0.17, 1.0.18
+The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16, 1.0.17, 1.0.18, 1.0.19
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
@@ -92,14 +92,14 @@ Please look at [ChangeLog](ChangeLog.md) for what is changed in the current vers
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.18.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.19.tar.gz](https://download.libsodium.org/libsodium/releases/)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.18.tar.gz
-  cd libsodium-1.0.18
+  tar -xf libsodium-1.0.19.tar.gz
+  cd libsodium-1.0.19
   ./configure
   make && make check
   sudo make install
@@ -151,9 +151,6 @@ To compile with [java 11](https://jdk.java.net/11/):
 mvn -f pom_java11.xml clean install
 mvn -f pom_java11.xml test
 ```
-
-**Please note: one unit test which checks the version of libsodium will fail if you use libsodium version > 1.0.15.**
-Please update that Unit test to match your version of libsodium.
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.
 
@@ -803,7 +800,7 @@ cracking.
 ```
 License is MIT
 
-Copyright © 2018-2019 muquit@muquit.com
+Copyright © 2018-2023 muquit@muquit.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
