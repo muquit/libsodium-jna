@@ -4,4 +4,4 @@
 # muquit@muquit.com Dec-10-2017 
 ########################################################################
 
-mvn -DperformRelease=true -Dgpg.passphrase="${MY_GPG_PASSPHRASE}" clean deploy
+mvn -X -DperformRelease=true -Dgpg.passphrase="${MY_GPG_PASSPHRASE}" clean deploy

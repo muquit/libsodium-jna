@@ -1,0 +1,50 @@
+Notes to myself. I always forget how to publish to maven central...
+There are two ways to publish
+
+* Old legacy way - https://oss.sonatype.org/
+* New - https://central.sonatype.org/
+
+These two systems are not compatible. New method requires to have a 'namespace'. As com.muquit
+is a registered namespace at https://oss.sonatype.org/, it cannot be used without migrating. 
+Therefore, I will keep using old for the time being
+
+* Login to https://oss.sonatype.org/
+  - Click on login name -> Profile from upper right corner
+  - Summary -> User Token
+  - Click on "Access User Token"
+  - Copy the <server></server> block
+  - Create/Update ~/.m2/settings.xml
+
+  <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+     <servers>
+      <server>
+        <id>ossrh</id>
+        <username>username from user token</username>
+        <password>password from user token</password>
+       </server>
+     </servers>
+   </settings>
+
+
+* Set the env var MY_GPG_PASSPHRASE
+
+* Publish to staging repo
+  ./install_release.sh
+  ./publish.sh
+
+* Login to https://oss.sonatype.org/
+  - Click on 'Staging Repositories'
+    - Find the newly created repo
+    - 'Close' the staging repo
+      - if all checks pass, 'Release' the repo
+
+The project will show up on https://repo1.maven.org/maven2/ almost 
+instantly but will take 2 to many ours to show up on https://search.maven.org  due to 
+indexing delay.
+
+
+--
+updated: Aug-31-2024 

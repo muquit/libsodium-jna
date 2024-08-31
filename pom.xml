@@ -36,6 +36,7 @@
 	  <url>https://github.com/muquit/libsodium-jna</url>
 	</scm>
 
+    <!--
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -48,6 +49,17 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+    -->
+<distributionManagement>
+  <snapshotRepository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  </snapshotRepository>
+  <repository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  </repository>
+</distributionManagement>
     <!-- sign only if performRelease profile is used -->
     <!-- run the install_release.sh -->
     <!-- Ref: https://stackoverflow.com/questions/14825039/suppressing-gpg-signing-for-maven-based-continuous-integration-builds-travis-ci -->
