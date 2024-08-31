@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.muquit.libsodiumjna</groupId>
   <artifactId>libsodium-jna</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <name>com.muquit.libsodiumjna</name>
   <description>Java bindings for libsodium with Java Native Access (JNA)</description>
   <url>https://github.com/muquit/libsodium-jna</url>
@@ -127,7 +127,7 @@
 	<dependency>
 		<groupId>net.java.dev.jna</groupId>
 		<artifactId>jna</artifactId>
-		<version>5.5.0</version>
+		<version>5.14.0</version>
 	</dependency>
 	    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
     <dependency>
@@ -159,7 +159,7 @@
 	<dependency>
 	  <groupId>junit</groupId>
 	  <artifactId>junit</artifactId>
-	  <version>4.13.1</version>
+	  <version>4.13.2</version>
 	  <scope>test</scope>
 	</dependency>
   </dependencies>

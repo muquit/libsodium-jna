@@ -84,7 +84,13 @@ non-maven project.
 
 
 # Version
-The current version of libsodium-jna is 1.0.4 (updated on Dec-10-2017), works with [libsodium](https://libsodium.org) 1.0.15, 1.0.16, 1.0.17, 1.0.18, 1.0.19
+The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works with [libsodium](https://libsodium.org)
+  * 1.0.20
+  * 1.0.19
+  * 1.0.18
+  * 1.0.17
+  * 1.0.16
+  * 1.0.15
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
@@ -92,14 +98,14 @@ Please look at [ChangeLog](ChangeLog.md) for what is changed in the current vers
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.19.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.20.tar.gz](https://download.libsodium.org/libsodium/releases/)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.19.tar.gz
-  cd libsodium-1.0.19
+  tar -xf libsodium-1.0.20.tar.gz
+  cd libsodium-1.0.20
   ./configure
   make && make check
   sudo make install
@@ -110,24 +116,24 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
 Add the following block inside dependencies block:
 
 ```
-    <!--  As of v1.0.4, libsodium-jna is in the maven central. -->
+    <!--  As of v1.0.5, libsodium-jna is in the maven central. -->
     <dependency>
         <groupId>com.muquit.libsodiumjna</groupId>
         <artifactId>libsodium-jna</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
     </dependency>
 ```
 **Update: Feb-18-2020**. libsodium-jna in Maven central uses Java Native Access v4.2.2. This version of
 JNA has issues with some version of Microsoft Windows e.g. it does not work in
 Windows Server 2019. If you are using libsodium-jna  from Maven in your
-project, please update the JNA version to 5.5.0 in your pom.xml as follows:
+project, please update the JNA version to the latest in your pom.xml as follows:
 
 ```
     <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
     <dependency>
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna</artifactId>
-        <version>5.5.0</version>
+        <version>5.14.0</version>
     </dependency>
 ```
 
@@ -800,7 +806,7 @@ cracking.
 ```
 License is MIT
 
-Copyright © 2018-2023 muquit@muquit.com
+Copyright © 2018-2024 muquit@muquit.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),

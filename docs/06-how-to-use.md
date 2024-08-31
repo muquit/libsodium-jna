@@ -2,14 +2,14 @@
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.19.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.20.tar.gz](https://download.libsodium.org/libsodium/releases/)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.19.tar.gz
-  cd libsodium-1.0.19
+  tar -xf libsodium-1.0.20.tar.gz
+  cd libsodium-1.0.20
   ./configure
   make && make check
   sudo make install
@@ -20,24 +20,24 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
 Add the following block inside dependencies block:
 
 ```
-    <!--  As of v1.0.4, libsodium-jna is in the maven central. -->
+    <!--  As of v1.0.5, libsodium-jna is in the maven central. -->
     <dependency>
         <groupId>com.muquit.libsodiumjna</groupId>
         <artifactId>libsodium-jna</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
     </dependency>
 ```
 **Update: Feb-18-2020**. libsodium-jna in Maven central uses Java Native Access v4.2.2. This version of
 JNA has issues with some version of Microsoft Windows e.g. it does not work in
 Windows Server 2019. If you are using libsodium-jna  from Maven in your
-project, please update the JNA version to 5.5.0 in your pom.xml as follows:
+project, please update the JNA version to the latest in your pom.xml as follows:
 
 ```
     <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
     <dependency>
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna</artifactId>
-        <version>5.5.0</version>
+        <version>5.14.0</version>
     </dependency>
 ```
 

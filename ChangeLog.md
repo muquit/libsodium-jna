@@ -1,12 +1,20 @@
 
 <!-- TOC -->
 
+- [v1.0.5](#v105)
 - [v1.0.4](#v104)
 - [v1.0.3](#v103)
 - [v1.0.2](#v102)
 - [v1.0.1](#v101)
 
 <!-- /TOC -->
+
+# v1.0.5
+
+* Update JNA version to 5.14.0 from 5.5.0 in order to support Apple silicon. No code change.
+  Tested with libsodium 1.0.20
+
+(Aug-31-2024 )
 
 # v1.0.4
 
