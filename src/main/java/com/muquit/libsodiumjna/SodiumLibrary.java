@@ -1046,31 +1046,49 @@ public class SodiumLibrary
         return publicKey;
     }
     
+    /**
+     * 24 bytes
+     */
     public static NativeLong cryptoBoxNonceBytes()
     {
         return sodium().crypto_box_noncebytes();
     }
     
+    /**
+     * 32 bytes
+     */
     public static NativeLong cryptoBoxSeedBytes()
     {
         return sodium().crypto_box_seedbytes();
     }
-    
+
+    /**
+     * 32 bytes
+     */
     public static NativeLong cryptoBoxPublicKeyBytes()
     {
         return sodium().crypto_box_publickeybytes();
     }
     
+    /**
+     * 64 bytes
+     */
     public static NativeLong cryptoBoxSecretKeyBytes()
     {
        return sodium().crypto_box_secretkeybytes();
     }
     
+    /**
+     * 16 bytes
+     */
     public static NativeLong cryptoBoxMacBytes()
     {
         return sodium().crypto_box_macbytes();
     }
     
+    /**
+     * 48 bytes
+     */
     public static NativeLong cryptoBoxSealBytes()
     {
         return sodium().crypto_box_sealbytes();
@@ -1115,6 +1133,9 @@ public class SodiumLibrary
         return sodium().crypto_pwhash_alg_default();
     }
 
+    /**
+     * 16 bytes
+     */
     public static int cryptoPwhashSaltBytes()
     {
         return sodium().crypto_pwhash_saltbytes();
