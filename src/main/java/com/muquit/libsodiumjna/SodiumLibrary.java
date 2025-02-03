@@ -486,19 +486,25 @@ public class SodiumLibrary
                 int alg);
                 */
 
-    public static byte[] cryptoPwhash(byte[] passwd, byte[] salt, long opsLimit, NativeLong memLimit, int algorithm) throws SodiumLibraryException
-    {
-        byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
-        
+    public static byte[] cryptoPwhash(byte[] passwd, byte[] salt16, long opsLimit, NativeLong memLimit, int algorithm)
+            throws SodiumLibraryException {
+        int outBytesLength = cryptoBoxSeedBytes().intValue();
+        return cryptoPwhash(passwd, salt16, outBytesLength, opsLimit, memLimit, algorithm);
+    }
+
+    public static byte[] cryptoPwhash(byte[] passwd, byte[] salt16, int outBytesLength, long opsLimit,
+            NativeLong memLimit, int algorithm) throws SodiumLibraryException {
+        byte[] key = new byte[outBytesLength];
+
         int rc = sodium().crypto_pwhash(key, key.length, 
                 passwd, passwd.length,
-                salt,
+                salt16,
                 opsLimit,
                 memLimit,
                 algorithm);
 
         if (logger.isDebugEnabled()) {
-            logger.debug(">>> NavtiveLong size: " + NativeLong.SIZE * 8 + " bits");
+            logger.debug(">>> NativeLong size: " + NativeLong.SIZE * 8 + " bits");
             logger.debug("crypto_pwhash returned: " + rc);
         }
 
