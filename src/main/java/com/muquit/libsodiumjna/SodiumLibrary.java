@@ -1061,6 +1061,13 @@ public class SodiumLibrary
     {
         return sodium().crypto_box_seedbytes();
     }
+    
+    // typo version, keep both correct and typo for compatibility
+    @Deprecated
+    public static NativeLong crytoBoxSeedBytes()
+    {
+        return sodium().crypto_box_seedbytes();
+    }
 
     /**
      * 32 bytes
@@ -1069,11 +1076,25 @@ public class SodiumLibrary
     {
         return sodium().crypto_box_publickeybytes();
     }
+
+    // typo version, keep both correct and typo for compatibility
+    @Deprecated
+    public static NativeLong crytoBoxPublicKeyBytes()
+    {
+        return sodium().crypto_box_publickeybytes();
+    }
     
     /**
      * 64 bytes
      */
     public static NativeLong cryptoBoxSecretKeyBytes()
+    {
+       return sodium().crypto_box_secretkeybytes();
+    }
+
+    // typo version, keep both correct and typo for compatibility
+    @Deprecated
+    public static NativeLong crytoBoxSecretKeyBytes()
     {
        return sodium().crypto_box_secretkeybytes();
     }
