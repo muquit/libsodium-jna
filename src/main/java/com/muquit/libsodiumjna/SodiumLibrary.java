@@ -486,6 +486,19 @@ public class SodiumLibrary
                 int alg);
                 */
 
+    public static byte[] cryptoPwhashArgon2idInteractive(byte[] passwd, byte[] salt16)
+            throws SodiumLibraryException {
+        int outBytesLength = cryptoBoxSeedBytes().intValue();
+        return cryptoPwhashArgon2idInteractive(passwd, salt16, outBytesLength);
+    }
+
+    public static byte[] cryptoPwhashArgon2idInteractive(byte[] passwd, byte[] salt16, int outBytesLength)
+            throws SodiumLibraryException {
+        long opsLimit = cryptoPwHashOpsLimitInteractive();
+        NativeLong memLimit = cryptoPwHashMemLimitInterative();
+        return cryptoPwhash(passwd, salt16, outBytesLength, opsLimit, memLimit, cryptoPwhashAlgArgon2id13());
+    }
+    
     public static byte[] cryptoPwhash(byte[] passwd, byte[] salt16, long opsLimit, NativeLong memLimit, int algorithm)
             throws SodiumLibraryException {
         int outBytesLength = cryptoBoxSeedBytes().intValue();
