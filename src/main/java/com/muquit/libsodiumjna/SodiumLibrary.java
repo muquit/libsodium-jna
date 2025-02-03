@@ -1032,17 +1032,17 @@ public class SodiumLibrary
         return sodium().crypto_box_noncebytes();
     }
     
-    public static NativeLong crytoBoxSeedBytes()
+    public static NativeLong cryptoBoxSeedBytes()
     {
         return sodium().crypto_box_seedbytes();
     }
     
-    public static NativeLong crytoBoxPublicKeyBytes()
+    public static NativeLong cryptoBoxPublicKeyBytes()
     {
         return sodium().crypto_box_publickeybytes();
     }
     
-    public static NativeLong crytoBoxSecretKeyBytes()
+    public static NativeLong cryptoBoxSecretKeyBytes()
     {
        return sodium().crypto_box_secretkeybytes();
     }
