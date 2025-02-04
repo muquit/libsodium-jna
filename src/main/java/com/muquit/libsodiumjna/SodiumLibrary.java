@@ -272,6 +272,7 @@ public class SodiumLibrary
         long crypto_sign_secretkeybytes();
         long crypto_sign_publickeybytes();
         int crypto_sign_keypair(byte[] pk, byte[] sk);
+        int crypto_sign_seed_keypair(byte[] pk, byte[] sk, byte[] seed);
         int crypto_sign_ed25519_bytes();
         int crypto_sign_bytes();
         
@@ -362,6 +363,25 @@ public class SodiumLibrary
         if (rc != 0)
         {
             throw new SodiumLibraryException("libsodium crypto_sign_keypair() failed, returned " + rc + ", expected 0");
+        }
+        kp.setPublicKey(publicKey);
+        kp.setPrivateKey(privateKey);
+        if (logger.isDebugEnabled()) {
+            logger.debug("pk len: " + publicKey.length);
+            logger.debug("sk len: " + privateKey.length);
+        }
+        return kp;
+    }
+    
+    public static SodiumKeyPair cryptoSignSeedKeyPair(byte[] seed32) throws SodiumLibraryException
+    {
+        SodiumKeyPair kp = new SodiumKeyPair();
+        byte[] publicKey = new byte[(int) sodium().crypto_sign_publickeybytes()];
+        byte[] privateKey = new byte[(int) sodium().crypto_sign_secretkeybytes()];
+        int rc = sodium().crypto_sign_seed_keypair(publicKey, privateKey, seed32);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_sign_seed_keypair() failed, returned " + rc + ", expected 0");
         }
         kp.setPublicKey(publicKey);
         kp.setPrivateKey(privateKey);
