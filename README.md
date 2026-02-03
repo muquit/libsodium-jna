@@ -106,7 +106,7 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
 
 ```
   tar -xf libsodium-1.0.21.tar.gz
-  cd libsodium-1.0.20
+  cd libsodium-1.0.21
   ./configure
   make && make check
   sudo make install
