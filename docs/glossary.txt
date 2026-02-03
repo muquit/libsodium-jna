@@ -1,0 +1,7 @@
+CHANGELOG   [ChangeLog](ChangeLog.md)
+LIBSODIUM   [libsodium](https://libsodium.org)
+LIBSODIUM_JNA [libsodium-jana gihub page](https://github.com/muquit/libsodium-jna)
+JNA         [Java Native Access](https:// github.com/java-native-access/jna)
+LIBSODIUM_LATEST [libsodium-1.0.21.tar.gz](https://download.libsodium.org/libsodium/releases/libsodium-1.0.21.tar.gz)
+LIBSODIUM_DOC [libsodium doc](https://download.libsodium.org/doc/)
+MARKDOWN_TOC [markdown-toc-go](https://github.com/muquit/markdown-toc-go)

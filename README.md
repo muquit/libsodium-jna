@@ -1,11 +1,11 @@
-## Page Contents
+## Table Of Contents
 - [Introduction](#introduction)
 - [Javadocs](#javadocs)
 - [Supported platforms](#supported-platforms)
 - [Requirements](#requirements)
-- [Version](#version)
+- [Version - 1.0.5](#version-105)
 - [How to use](#how-to-use)
-  - [Install native libsodium C library  first](#install-native-libsodium-c-library--first)
+  - [Install native libsodium C library  first](#install-native-libsodium-c-library-first)
   - [Update your project's ```pom.xml```](#update-your-projects-pomxml)
   - [If you want to Install ```libsodium-jna``` from trunk](#if-you-want-to-install-libsodium-jna-from-trunk)
 - [Supported APIs](#supported-apis)
@@ -17,7 +17,7 @@
 - [APIs](#apis)
   - [Load the libsodium C Library first](#load-the-libsodium-c-library-first)
     - [Example: Load the native libsodium library](#example-load-the-native-libsodium-library)
-  - [Version of sodium library](#version-of-sodium-library-1)
+  - [Version of sodium library](#version-of-sodium-library)
     - [Example: Print libsodium version](#example-print-libsodium-version)
   - [Generate random data](#generate-random-data)
     - [Example: Generate random data](#example-generate-random-data)
@@ -25,13 +25,13 @@
     - [Encrypt a message with a key and a nonce](#encrypt-a-message-with-a-key-and-a-nonce)
     - [Verify and decrypt the message](#verify-and-decrypt-the-message)
     - [Example: Encrypt and Decrypt a message](#example-encrypt-and-decrypt-a-message)
-  - [Public-key cryptography](#public-key-cryptography-1)
+  - [Public-key cryptography](#public-key-cryptography)
     - [Generate Key Pair](#generate-key-pair)
     - [Example: Generate key pair](#example-generate-key-pair)
     - [Example: Alice shares secret with Bob, Bob verifies and decrypt it](#example-alice-shares-secret-with-bob-bob-verifies-and-decrypt-it)
     - [Example: Alice (sender) anonymously encrypts message with Bob's (recipient) public key](#example-alice-sender-anonymously-encrypts-message-with-bobs-recipient-public-key)
     - [Example: Bob (recipient) decrypts the message with his private key](#example-bob-recipient-decrypts-the-message-with-his-private-key)
-  - [Password hashing, key generation](#password-hashing-key-generation-1)
+  - [Password hashing, key generation](#password-hashing-key-generation)
     - [Derive Key from password](#derive-key-from-password)
     - [Example: Derive key from password](#example-derive-key-from-password)
     - [Derive US-ASCII encoded key from password for storing](#derive-us-ascii-encoded-key-from-password-for-storing)
@@ -41,16 +41,16 @@
   - [How to encrypt a private key](#how-to-encrypt-a-private-key)
     - [Encrypting the private key](#encrypting-the-private-key)
     - [Decrypting the private key](#decrypting-the-private-key)
-- [License is MIT](#license-is-mit)
 - [If your project is not a maven project](#if-your-project-is-not-a-maven-project)
+- [License is MIT](#license-is-mit)
 
 # Introduction
 
-*libsodium-jna* is a java library that binds to [libsodium](https://libsodium.org) C crypto APIs with [Java   Native Access](https://github.com/java-native-access/jna) (JNA). I wrote it because I did not like any of the Java implementation of libsodium. I hope you will find this project useful and fun to use.
+*libsodium-jna* is a java library that binds to [libsodium](https://libsodium.org) C crypto APIs with [Java Native Access](https:// github.com/java-native-access/jna) (JNA). I wrote it because I did not like any of the Java implementation of libsodium. I hope you will find this project useful and fun to use.
 
 Bug reports, suggestions are always welcome!
 
-If you add support to more libsodium APIs, please send me a pull request. If yo do so, please do not forget   to update the documentation add unit tests. If you need to generate test vectors, please look at ```misc/     gen_test_vectors.c```
+If you add support to more libsodium APIs, please send me a pull request. If yo do so, please do not forget to update the documentation add unit tests. If you need to generate test vectors, please look at ```misc/gen_test_vectors.c```
 
 # Javadocs
 Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](https://muquit.github.io/libsodium-jna/)
@@ -59,7 +59,7 @@ Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](h
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.19 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.21 with JVM 1.7 to 21.
 
 | Platform | JVM |
 |----------|-----|
@@ -71,7 +71,7 @@ The implementation is tested on the following platforms with libsodium v1.0.15 -
 
 # Requirements
 
-* jdk 1.7+. The default `pom.xml` is for jdk upto 1.8. For [jdk11](https://jdk.java.net/11/), use `pom_java11.xml`
+* jdk 1.7+. Compiled and tested with jdk8 to jdk21.
 
 * maven must be installed in order to create the jar file. However, it is possible to use the library in a 
 non-maven project.
@@ -83,8 +83,9 @@ non-maven project.
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
 
 
-# Version
+# Version - 1.0.5
 The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works with [libsodium](https://libsodium.org)
+  * 1.0.21
   * 1.0.20
   * 1.0.19
   * 1.0.18
@@ -98,13 +99,13 @@ Please look at [ChangeLog](ChangeLog.md) for what is changed in the current vers
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.20.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download [libsodium-1.0.21.tar.gz](https://download.libsodium.org/libsodium/releases/libsodium-1.0.21.tar.gz)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.20.tar.gz
+  tar -xf libsodium-1.0.21.tar.gz
   cd libsodium-1.0.20
   ./configure
   make && make check
@@ -150,12 +151,6 @@ check-in broken code.
     cd libsodium-jna
     mvn clean install
     mvn test
-```
-To compile with [java 11](https://jdk.java.net/11/):
-
-```
-mvn -f pom_java11.xml clean install
-mvn -f pom_java11.xml test
 ```
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.
@@ -801,12 +796,45 @@ cracking.
 ```
 
 
+# If your project is not a maven project
+
+If your project is not a maven project, find out the dependencies of 
+libsodium-jna and obtain the jar files from maven central manually and add 
+them to your build path
+
+* find the dependencies
+
+```
+    $ cd libsodium-jna
+    $ mvn dependency:tree
+...
+[INFO] ---------------< com.muquit.libsodiumjna:libsodium-jna >----------------
+[INFO] Building com.muquit.libsodiumjna 1.0.5
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- dependency:3.7.0:tree (default-cli) @ libsodium-jna ---
+[INFO] com.muquit.libsodiumjna:libsodium-jna:jar:1.0.5
+[INFO] +- net.java.dev.jna:jna:jar:5.13.0:compile
+[INFO] +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] +- org.slf4j:slf4j-reload4j:jar:1.7.36:test
+[INFO] |  \- ch.qos.reload4j:reload4j:jar:1.2.19:test
+[INFO] +- commons-codec:commons-codec:jar:1.15:compile
+[INFO] \- junit:junit:jar:4.13.2:test
+[INFO]    \- org.hamcrest:hamcrest-core:jar:1.3:test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+...    
+```
+
+
 # License is MIT
 
 ```
 License is MIT
 
-Copyright © 2018-2024 muquit@muquit.com
+Copyright © 2018-1026 muquit@muquit.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -828,34 +856,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ```
 
-# If your project is not a maven project
-
-If your project is not a maven project, find out the dependencies of libsodium-jna and obtain the jar files from maven
-central manually and add them to your build path
-
-* find the dependencies
-
-```
-    $ cd libsodium-jna
-    $ mvn dependency:tree
-...
-[INFO] ------------------------------------------------------------------------
-[INFO] Building com.muquit.libsodiumjna 1.0.1
-[INFO] ------------------------------------------------------------------------
-[INFO] 
-[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ libsodium-jna ---
-[INFO] com.muquit.libsodiumjna:libsodium-jna:jar:1.0.1
-[INFO] +- net.java.dev.jna:jna:jar:4.2.2:compile
-[INFO] +- org.slf4j:slf4j-api:jar:1.7.21:compile
-[INFO] +- org.slf4j:slf4j-log4j12:jar:1.7.21:compile
-[INFO] |  \- log4j:log4j:jar:1.2.17:compile
-[INFO] +- commons-codec:commons-codec:jar:1.10:compile
-[INFO] \- junit:junit:jar:4.11:test
-[INFO]    \- org.hamcrest:hamcrest-core:jar:1.3:test
-...    
-```
-
 
 ---
-Created with [markdown_helper](https://github.com/BurdetteLamar/markdown_helper) with [mkdocs.sh](mkdocs.sh)
-
+<sub>TOC is created by https://github.com/muquit/markdown-toc-go on Feb-02-2026</sub>

@@ -2,7 +2,7 @@
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.19 with JVM 1.7, 1.8 and  [jdk11](https://jdk.java.net/11/)
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.21 with JVM 1.7 to 21.
 
 | Platform | JVM |
 |----------|-----|

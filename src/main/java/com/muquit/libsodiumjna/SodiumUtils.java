@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * A helper class to convert hex to binary and vice versa. It uses apache commons Hex class.
  * I get confused (dyslexic) with encode decode methods of org.apache.commons.codec.binary.Hex class and
  * always have to look it up!
- * @author muquit@muquit.com - Oct-09-2016
  */
 
 public class SodiumUtils
@@ -21,8 +20,6 @@ public class SodiumUtils
      * 
      * @param hexString Hex string to convert
      * @return Binary bytes
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
      */
     public static byte[] hex2Binary(String hexString)
     {
@@ -44,8 +41,6 @@ public class SodiumUtils
      * 
      * @param data Binary data bytes to convert
      * @return Hex string
-     * <p>
-     * @author muquit@muquit.com - Sep 9, 2017
      */
     public static String binary2Hex(byte[] data)
     {

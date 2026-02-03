@@ -1,11 +1,3 @@
-## Table Of Contents
-- [v1.0.5](#v105)
-  - [Update (Feb-02-2026)](#update-feb-02-2026)
-- [v1.0.4](#v104)
-- [v1.0.3](#v103)
-- [v1.0.2](#v102)
-- [v1.0.1](#v101)
-
 # v1.0.5
 
 * Update JNA version to 5.14.0 from 5.5.0 in order to support Apple silicon. No code change.
@@ -18,7 +10,7 @@
 * Updated main branch with single `pom.xml` to support JDK 8 to JDK 21.  
 Previously required separate `pom.xml` (JDK 8) and `pom_java11.xml`
 (JDK 11+). `slf4j` deprecated `slf4j-log4j12`, now they created 
-`reload4j`. Updated `pom.xml` for that. Use [markdown-toc-go](https://github.com/muquit/markdown-toc-go) to 
+`reload4j`. Updated `pom.xml` for that. Use @MARKDOWN_TOC@ to 
 generate docs.
 
 # v1.0.4

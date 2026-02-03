@@ -3,8 +3,6 @@ package com.muquit.libsodiumjna;
 /**
  * Class to hold cipher text and mac for secret box used by {@link SodiumLibrary#cryptoSecretBoxDetached(byte[], byte[], byte[])} and
  * {@link SodiumLibrary#cryptoSecretBoxOpenDetached(SodiumSecretBox, byte[], byte[])}
- * 
- * @author muquit@muquit.com - Oct 22, 2016
  */
 public class SodiumSecretBox
 {

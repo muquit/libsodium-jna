@@ -2,13 +2,13 @@
 ## Install native libsodium C library  first
 
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.20.tar.gz](https://download.libsodium.org/libsodium/releases/)
+  * Download @LIBSODIUM_LATEST@
   * make sure ```pkg-config``` is installed
   
-Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
+Follow the instructions on @LIBSODIUM_DOC@ page on how to compile and install. I do the following on Linux and Mac OS X:
 
 ```
-  tar -xf libsodium-1.0.20.tar.gz
+  tar -xf libsodium-1.0.21.tar.gz
   cd libsodium-1.0.20
   ./configure
   make && make check
@@ -54,12 +54,6 @@ check-in broken code.
     cd libsodium-jna
     mvn clean install
     mvn test
-```
-To compile with [java 11](https://jdk.java.net/11/):
-
-```
-mvn -f pom_java11.xml clean install
-mvn -f pom_java11.xml test
 ```
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.
