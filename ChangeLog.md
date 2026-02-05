@@ -1,6 +1,7 @@
 ## Table Of Contents
 - [v1.0.5](#v105)
   - [Update (Feb-02-2026)](#update-feb-02-2026)
+  - [Update (Feb-04-2026)](#update-feb-04-2026)
 - [v1.0.4](#v104)
 - [v1.0.3](#v103)
 - [v1.0.2](#v102)
@@ -20,6 +21,10 @@ Previously required separate `pom.xml` (JDK 8) and `pom_java11.xml`
 (JDK 11+). `slf4j` deprecated `slf4j-log4j12`, now they created 
 `reload4j`. Updated `pom.xml` for that. Use [markdown-toc-go](https://github.com/muquit/markdown-toc-go) to 
 generate docs.
+
+## Update (Feb-04-2026)
+* Add instructions on how to use from a Gradle project.
+* Add gradle test
 
 # v1.0.4
 

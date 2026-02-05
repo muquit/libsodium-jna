@@ -1,4 +1,5 @@
 CHANGELOG   [ChangeLog](ChangeLog.md)
+MAKEFILE    [Makefile](Makefile)
 LIBSODIUM   [libsodium](https://libsodium.org)
 LIBSODIUM_JNA [libsodium-jana gihub page](https://github.com/muquit/libsodium-jna)
 JNA         [Java Native Access](https:// github.com/java-native-access/jna)

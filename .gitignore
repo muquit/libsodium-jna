@@ -9,3 +9,5 @@
 *.iml
 misc/gen_test_vectors
 /target/
+.gradle/
+build/

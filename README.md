@@ -3,11 +3,15 @@
 - [Javadocs](#javadocs)
 - [Supported platforms](#supported-platforms)
 - [Requirements](#requirements)
-- [Version - 1.0.5](#version-105)
+- [Version 1.0.5](#version-105)
 - [How to use](#how-to-use)
-  - [Install native libsodium C library  first](#install-native-libsodium-c-library-first)
-  - [Update your project's ```pom.xml```](#update-your-projects-pomxml)
-  - [If you want to Install ```libsodium-jna``` from trunk](#if-you-want-to-install-libsodium-jna-from-trunk)
+  - [Install native libsodium C library first](#install-native-libsodium-c-library-first)
+  - [Add libsodium-jna to your project](#add-libsodium-jna-to-your-project)
+    - [Maven](#maven)
+    - [Gradle](#gradle)
+  - [If you want to install ```libsodium-jna``` from source](#if-you-want-to-install-libsodium-jna-from-source)
+    - [Maven](#maven)
+    - [Gradle](#gradle)
 - [Supported APIs](#supported-apis)
   - [Version of sodium library](#version-of-sodium-library)
   - [Generating random data](#generating-random-data)
@@ -83,7 +87,7 @@ non-maven project.
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
 
 
-# Version - 1.0.5
+# Version 1.0.5
 The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works with [libsodium](https://libsodium.org)
   * 1.0.21
   * 1.0.20
@@ -96,14 +100,12 @@ The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works wi
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
 # How to use
-## Install native libsodium C library  first
-
+## Install native libsodium C library first
 * Compile and Install libsodium. It is a requirement.
   * Download [libsodium-1.0.21.tar.gz](https://download.libsodium.org/libsodium/releases/libsodium-1.0.21.tar.gz)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
-
 ```
   tar -xf libsodium-1.0.21.tar.gz
   cd libsodium-1.0.21
@@ -112,50 +114,74 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
   sudo make install
   sudo ldconfig
 ```
-## Update your project's ```pom.xml```
 
-Add the following block inside dependencies block:
+## Add libsodium-jna to your project
 
+### Maven
+Add the following block inside the dependencies block of your `pom.xml`:
+```xml
+<!--  As of v1.0.5, libsodium-jna is in the maven central. -->
+<dependency>
+    <groupId>com.muquit.libsodiumjna</groupId>
+    <artifactId>libsodium-jna</artifactId>
+    <version>1.0.5</version>
+</dependency>
 ```
-    <!--  As of v1.0.5, libsodium-jna is in the maven central. -->
-    <dependency>
-        <groupId>com.muquit.libsodiumjna</groupId>
-        <artifactId>libsodium-jna</artifactId>
-        <version>1.0.5</version>
-    </dependency>
-```
+
 **Update: Feb-18-2020**. libsodium-jna in Maven central uses Java Native Access v4.2.2. This version of
 JNA has issues with some version of Microsoft Windows e.g. it does not work in
-Windows Server 2019. If you are using libsodium-jna  from Maven in your
+Windows Server 2019. If you are using libsodium-jna from Maven in your
 project, please update the JNA version to the latest in your pom.xml as follows:
-
+```xml
+<!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+<dependency>
+    <groupId>net.java.dev.jna</groupId>
+    <artifactId>jna</artifactId>
+    <version>5.14.0</version>
+</dependency>
 ```
-    <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
-    <dependency>
-        <groupId>net.java.dev.jna</groupId>
-        <artifactId>jna</artifactId>
-        <version>5.14.0</version>
-    </dependency>
+
+### Gradle
+Add the following to your `build.gradle`:
+```gradle
+dependencies {
+    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.5'
+}
 ```
 
-
-Note: If you do not use maven, look at the end of the document.
-
-## If you want to Install ```libsodium-jna``` from trunk
-
-Trunk contains the latest development code but mostly stable. I try not to
-check-in broken code.
-
+If you need to override the JNA version (recommended for Windows Server 2019 and newer):
+```gradle
+dependencies {
+    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.5'
+    implementation 'net.java.dev.jna:jna:5.14.0'
+}
 ```
-    git clone https://github.com/muquit/libsodium-jna.git
-    cd libsodium-jna
-    mvn clean install
-    mvn test
+
+Note: If you do not use Maven or Gradle, look at the end of the document.
+
+## If you want to install ```libsodium-jna``` from source
+The main branch contains stable code.
 ```
+git clone https://github.com/muquit/libsodium-jna.git
+cd libsodium-jna
+```
+### Maven
+```bash
+mvn clean install
+mvn test
+```
+
+### Gradle
+**Note:** Building with Gradle 9.x requires JDK 17+, though Maven works with 
+JDK 8+. The compiled library works on JDK 8+.
+```bash
+gradle clean build publishToMavenLocal
+gradle test
+```
+
+Please look at [Makefile](Makefile) for various targets.
 
 To load the project in Eclipse, select _File->Import...->Maven->Existing Maven Projects_, then Click on *Next >*, click on *Browse...* button and select the libsodium-jna directory.
-
-
 
 # Supported APIs
 
@@ -858,4 +884,4 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 ---
-<sub>TOC is created by https://github.com/muquit/markdown-toc-go on Feb-02-2026</sub>
+<sub>TOC is created by https://github.com/muquit/markdown-toc-go on Feb-04-2026</sub>

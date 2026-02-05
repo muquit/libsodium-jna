@@ -1,4 +1,4 @@
-# Version - 1.0.5
+# Version 1.0.5
 The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works with @LIBSODIUM@
   * 1.0.21
   * 1.0.20

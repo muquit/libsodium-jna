@@ -13,6 +13,10 @@ Previously required separate `pom.xml` (JDK 8) and `pom_java11.xml`
 `reload4j`. Updated `pom.xml` for that. Use @MARKDOWN_TOC@ to 
 generate docs.
 
+## Update (Feb-04-2026)
+* Add instructions on how to use from a Gradle project.
+* Add gradle test
+
 # v1.0.4
 
 * Support 32 bit Windows.

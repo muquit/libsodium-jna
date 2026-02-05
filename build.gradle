@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.muquit.libsodiumjna'
+version = '1.0.5'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Main dependencies (from pom.xml)
+    implementation 'net.java.dev.jna:jna:5.14.0'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'commons-codec:commons-codec:1.15'
+    
+    // Test dependencies
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.slf4j:slf4j-reload4j:1.7.36'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.muquit.libsodiumjna'
+            artifactId = 'libsodium-jna'
+            version = '1.0.5'
+            
+            from components.java
+        }
+    }
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
