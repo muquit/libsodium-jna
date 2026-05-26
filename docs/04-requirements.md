@@ -1,6 +1,6 @@
 # Requirements
 
-* jdk 1.7+. Compiled and tested with jdk8 to jdk21.
+* jdk 1.7+. Compiled and tested with jdk8 to jdk21. Note: **Apple Silicon (M-series):** Use JDK 17 or later (native arm64 build); Older JDK runs under Rosetta 2 and fails  to load the native arm64 libsodium library.
 
 * maven must be installed in order to create the jar file. However, it is possible to use the library in a 
 non-maven project.

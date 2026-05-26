@@ -63,7 +63,9 @@ Generated javadocs are available at: [https://muquit.github.io/libsodium-jna/](h
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.21 with JVM 1.7 to 21.
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.22 with JVM 1.7 to 21.
+
+Note: **Apple Silicon (M-series):** Use JDK 17 or later (native arm64 build); Older JDK runs under Rosetta 2 and fails to load the native arm64 libsodium library.
 
 | Platform | JVM |
 |----------|-----|
@@ -75,7 +77,7 @@ The implementation is tested on the following platforms with libsodium v1.0.15 -
 
 # Requirements
 
-* jdk 1.7+. Compiled and tested with jdk8 to jdk21.
+* jdk 1.7+. Compiled and tested with jdk8 to jdk21. Note: **Apple Silicon (M-series):** Use JDK 17 or later (native arm64 build); Older JDK runs under Rosetta 2 and fails  to load the native arm64 libsodium library.
 
 * maven must be installed in order to create the jar file. However, it is possible to use the library in a 
 non-maven project.
@@ -102,13 +104,13 @@ Please look at [ChangeLog](ChangeLog.md) for what is changed in the current vers
 # How to use
 ## Install native libsodium C library first
 * Compile and Install libsodium. It is a requirement.
-  * Download [libsodium-1.0.21.tar.gz](https://download.libsodium.org/libsodium/releases/libsodium-1.0.21.tar.gz)
+  * Download [libsodium-1.0.22.tar.gz](https://download.libsodium.org/libsodium/releases/libsodium-1.0.22.tar.gz)
   * make sure ```pkg-config``` is installed
   
 Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) page on how to compile and install. I do the following on Linux and Mac OS X:
 ```
-  tar -xf libsodium-1.0.21.tar.gz
-  cd libsodium-1.0.21
+  tar -xf libsodium-1.0.22.tar.gz
+  cd libsodium-1.0.22
   ./configure
   make && make check
   sudo make install
@@ -166,6 +168,10 @@ git clone https://github.com/muquit/libsodium-jna.git
 cd libsodium-jna
 ```
 ### Maven
+
+**Apple Silicon (M-series):** Use JDK 17 or later (native arm64 build); 
+Older JDK runs under Rosetta 2 and fails to load the native arm64 libsodium library.
+
 ```bash
 mvn clean install
 mvn test
@@ -884,4 +890,4 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 ---
-<sub>TOC is created by https://github.com/muquit/markdown-toc-go on Feb-04-2026</sub>
+<sub>TOC is created by https://github.com/muquit/markdown-toc-go on May-26-2026</sub>

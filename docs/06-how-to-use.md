@@ -6,8 +6,8 @@
   
 Follow the instructions on @LIBSODIUM_DOC@ page on how to compile and install. I do the following on Linux and Mac OS X:
 ```
-  tar -xf libsodium-1.0.21.tar.gz
-  cd libsodium-1.0.21
+  tar -xf libsodium-1.0.22.tar.gz
+  cd libsodium-1.0.22
   ./configure
   make && make check
   sudo make install
@@ -65,6 +65,10 @@ git clone https://github.com/muquit/libsodium-jna.git
 cd libsodium-jna
 ```
 ### Maven
+
+**Apple Silicon (M-series):** Use JDK 17 or later (native arm64 build); 
+Older JDK runs under Rosetta 2 and fails to load the native arm64 libsodium library.
+
 ```bash
 mvn clean install
 mvn test

@@ -2,7 +2,9 @@
 
 In theory it should work on any platform where native libsodium library works and JVM 1.7+ is available.
 
-The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.21 with JVM 1.7 to 21.
+The implementation is tested on the following platforms with libsodium v1.0.15 - v1.0.22 with JVM 1.7 to 21.
+
+Note: **Apple Silicon (M-series):** Use JDK 17 or later (native arm64 build); Older JDK runs under Rosetta 2 and fails to load the native arm64 libsodium library.
 
 | Platform | JVM |
 |----------|-----|
