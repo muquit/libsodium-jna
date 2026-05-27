@@ -867,7 +867,7 @@ them to your build path
 ```
 License is MIT
 
-Copyright © 2018-2026 muquit@muquit.com
+Copyright © 2018-2026 https://muquit.com/
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
