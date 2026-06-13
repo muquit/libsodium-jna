@@ -9,7 +9,10 @@ import com.muquit.libsodiumjna.exceptions.SodiumLibraryException;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
+import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * SodiumLibrary is a Java binding to <a href="https://download.libsodium.org/doc/" target="_blank">libsodium</a> crypto C APIs 
@@ -114,6 +117,14 @@ public class SodiumLibrary
     {
         if (SodiumLibrary.libPath == null)
         {
+            logger.debug("libpath not set, trying to find lib");
+            tryFindLib();
+            if( SodiumLibrary.libPath == null)
+            {
+                logger.info("libpath not set, throw exception");
+                throw new RuntimeException("Please set the absolute path of the libsodium libary by calling SodiumLibrary.setLibraryPath(path)");
+            }
+
             logger.info("libpath not set, throw exception");
             throw new RuntimeException("Please set the absolute path of the libsodium libary by calling SodiumLibrary.setLibraryPath(path)");
         }
@@ -130,6 +141,25 @@ public class SodiumLibrary
         	initialized = true;
         }
         return sodium;
+    }
+
+    private static void tryFindLib() {
+        if (Platform.isWindows()) {
+            // use env var, as it's possible we're running in Windows PE with X:\Windows
+            String s1 = System.getenv("SystemRoot") + "\\System32\\libsodium.dll";
+            if (Files.isReadable(Paths.get(s1))) {
+                SodiumLibrary.libPath = s1;
+                logger.debug("found {}",s1);
+                return;
+            }
+        }
+
+        String s2 = "./libsodium.dll";
+        if (Files.isReadable(Paths.get(s2))) {
+            SodiumLibrary.libPath = s2;
+            logger.debug("found {}",s2);
+            return;
+        }
     }
 
     private static final class SingletonHelper
