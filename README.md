@@ -446,7 +446,7 @@ String decryptedMessage;
 try
 {
     decryptedMessage = new String(decryptedMessageBytes, "UTF-8");
-    System.out.println("Decrypted message: " + decryptedMessageBytes);
+    System.out.println("Decrypted message: " + decryptedMessage);
 } catch (UnsupportedEncodingException e)
 {
     e.printStackTrace();
