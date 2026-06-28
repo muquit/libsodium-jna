@@ -101,7 +101,7 @@ The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works wi
 * 1.0.16
 * 1.0.15
 
-**Note:** v1.0.6 has some code cleanup but not in Maven Centrail yet.
+**Note:** v1.0.6 has some code cleanup but not in Maven Central yet.
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
