@@ -1,4 +1,7 @@
 # Feb-02-2026
+
+.PHONY: all build build_gradle build_maven test clean docs doc deptree gradle-clean
+
 all: build
 
 build:
@@ -19,16 +22,15 @@ test:
 	mvn clean test
 	gradle clean test
 
-.PHONY: docs
 docs:
 	./scripts/mkdocs.sh
 
-.PHONY: deptree
+doc: docs
+
 deptree:
 	mvn dependency:tree
 	gradle dependencies --configuration runtimeClasspath
 
-.PHONY: gradle-clean
 # stop Gradle daemon and clear caches (use when seeing build errors or 
 # cache corruption)
 gradle-clean:
