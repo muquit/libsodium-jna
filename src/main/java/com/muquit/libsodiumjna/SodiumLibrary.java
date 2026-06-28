@@ -10,6 +10,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.LongByReference;
 
 /**
  * SodiumLibrary is a Java binding to <a href="https://download.libsodium.org/doc/" target="_blank">libsodium</a> crypto C APIs 
@@ -30,13 +31,13 @@ public class SodiumLibrary
     private final static Logger logger = LoggerFactory.getLogger(SodiumLibrary.class);
     
     private static String libPath;
-    private static boolean initialized = false;
+    private static volatile boolean initialized = false;
 
     private SodiumLibrary(){}
     
     public static void log(String msg)
     {
-        System.out.println("MMMM: " + msg);
+        logger.debug(msg);
     }
     
    /**
@@ -92,11 +93,21 @@ public class SodiumLibrary
     }
     
     /**
-     * @return path of library set by SodiumLibary.setLibraryPath()
+     * @return path of library set by SodiumLibrary.setLibraryPath()
+     * @deprecated Use {@link #getLibraryPath()} instead
      */
+    @Deprecated
     public static String getLibaryPath()
     {
         return SodiumLibrary.libPath;
+    }
+
+    /**
+     * @return path of library set by SodiumLibrary.setLibraryPath()
+     */
+    public static String getLibraryPath()
+    {
+        return getLibaryPath();
     }
 
     /**
@@ -121,20 +132,24 @@ public class SodiumLibrary
         final Sodium sodium = SingletonHelper.instance;
         
         if (!initialized) {
-        	int rc = sodium.sodium_init();
-        	if (rc == -1)
-        	{
-        		logger.error("ERROR: sodium_init() failed: " + rc);
-        		throw new RuntimeException("sodium_init() failed, rc=" + rc);
-        	}
-        	initialized = true;
+            synchronized (SodiumLibrary.class) {
+                if (!initialized) {
+                    int rc = sodium.sodium_init();
+                    if (rc == -1)
+                    {
+                        logger.error("ERROR: sodium_init() failed: " + rc);
+                        throw new RuntimeException("sodium_init() failed, rc=" + rc);
+                    }
+                    initialized = true;
+                }
+            }
         }
         return sodium;
     }
 
     private static final class SingletonHelper
     {
-        public static final Sodium instance = (Sodium) Native.loadLibrary(libPath,Sodium.class);
+        public static final Sodium instance = Native.load(libPath, Sodium.class);
     }
 
     /**
@@ -283,11 +298,11 @@ public class SodiumLibrary
         int crypto_sign_verify_detached(byte[] sig, byte[] m,
                                     	long mlen, byte[] pk);
         
-        int crypto_sign(byte[] sm, long smlen_p,
+        int crypto_sign(byte[] sm, LongByReference smlen_p,
         				byte[] m, long mlen,
         				byte[] sk);
         
-        int crypto_sign_open(byte[] m, long mlen_p,
+        int crypto_sign_open(byte[] m, LongByReference mlen_p,
         					byte[] sm, long smlen,
         					byte[] pk);
 
@@ -309,18 +324,26 @@ public class SodiumLibrary
 
     public static byte[] cryptoSignOpen(byte[] sig, byte[] pk) throws SodiumLibraryException
     {
-    	byte[] m = new byte[(int) sig.length];
-    	byte[] mlen = new byte[1];
-        int rc = sodium().crypto_sign_open(m, mlen[0], sig, (long) sig.length, pk);
-        if (rc == 0) { return m; }
-        return new byte[1];
+        int messageLen = sig.length - sodium().crypto_sign_bytes();
+        if (messageLen < 0)
+        {
+            throw new SodiumLibraryException("signed message is too short to contain a valid signature");
+        }
+        byte[] m = new byte[messageLen];
+        LongByReference mlen = new LongByReference();
+        int rc = sodium().crypto_sign_open(m, mlen, sig, (long) sig.length, pk);
+        if (rc != 0)
+        {
+            throw new SodiumLibraryException("libsodium crypto_sign_open() failed, returned " + rc + ", expected 0");
+        }
+        return m;
     }
     
     public static byte[] cryptoSign(byte[] m, byte[] sk) throws SodiumLibraryException
     {
-        byte[] sm = new byte[sodium().crypto_sign_bytes()+m.length];
-        byte[] test = new byte[1];
-        int rc = sodium().crypto_sign(sm, test[0], m, m.length, sk);
+        byte[] sm = new byte[sodium().crypto_sign_bytes() + m.length];
+        LongByReference smlen = new LongByReference();
+        int rc = sodium().crypto_sign(sm, smlen, m, m.length, sk);
         if (rc != 0)
         {
             throw new SodiumLibraryException("libsodium crypto_sign (combined mode, not detached) failed, returned " + rc + ", expected 0");
@@ -386,25 +409,37 @@ public class SodiumLibrary
     }
     
     // key conversion from ED to Curve so that signed public key can be used for encryption - secret key conversion
+    /** @deprecated Use {@link #cryptoSignEdSkToCurveSk(byte[])} instead */
+    @Deprecated
     public static byte[]cryptoSignEdSkTOcurveSk (byte[] edSK)  throws SodiumLibraryException {
     	byte[] curveSK = new byte[sodium().crypto_box_publickeybytes().intValue()];
     	int rc = sodium().crypto_sign_ed25519_sk_to_curve25519(curveSK, edSK);
         if (rc != 0)
         {
-            throw new SodiumLibraryException("libsodium crypto_generichash failed, returned " + rc + ", expected 0");
+            throw new SodiumLibraryException("libsodium crypto_sign_ed25519_sk_to_curve25519() failed, returned " + rc + ", expected 0");
         }   	
     	return curveSK;    	
     }
     
+    public static byte[] cryptoSignEdSkToCurveSk(byte[] edSK) throws SodiumLibraryException {
+        return cryptoSignEdSkTOcurveSk(edSK);
+    }
+
     // key conversion from ED to Curve so that signed public key can be used for encryption - secret key conversion
+    /** @deprecated Use {@link #cryptoSignEdPkToCurvePk(byte[])} instead */
+    @Deprecated
     public static byte[]cryptoSignEdPkTOcurvePk (byte[] edPK)  throws SodiumLibraryException {
     	byte[] curvePK = new byte[sodium().crypto_box_publickeybytes().intValue()];
     	int rc = sodium().crypto_sign_ed25519_pk_to_curve25519(curvePK, edPK);
         if (rc != 0)
         {
-            throw new SodiumLibraryException("libsodium crypto_generichash failed, returned " + rc + ", expected 0");
+            throw new SodiumLibraryException("libsodium crypto_sign_ed25519_pk_to_curve25519() failed, returned " + rc + ", expected 0");
         }   	
-    	return curvePK;    	
+    	return curvePK;
+    }
+
+    public static byte[] cryptoSignEdPkToCurvePk(byte[] edPK) throws SodiumLibraryException {
+        return cryptoSignEdPkTOcurvePk(edPK);
     }
 
 
@@ -526,7 +561,7 @@ public class SodiumLibrary
         int saltLength = cryptoPwhashSaltBytes();
         if (salt.length != saltLength)
         {
-            throw new SodiumLibraryException("salt is " + salt.length + ", it must be" + saltLength + " bytes");
+            throw new SodiumLibraryException("salt is " + salt.length + ", it must be " + saltLength + " bytes");
         }
 
         byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
@@ -672,7 +707,7 @@ public class SodiumLibrary
         NativeLong salt_length = sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
         if (salt.length != salt_length.intValue())
         {
-            throw new SodiumLibraryException("salt is " + salt.length + ", it must be" + salt_length + " bytes");
+            throw new SodiumLibraryException("salt is " + salt.length + ", it must be " + salt_length + " bytes");
         }
         byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
         int rc = sodium().crypto_pwhash_scryptsalsa208sha256(key, key.length, 
@@ -699,7 +734,7 @@ public class SodiumLibrary
         NativeLong salt_length = sodium().crypto_pwhash_scryptsalsa208sha256_saltbytes();
         if (salt.length != salt_length.intValue())
         {
-            throw new SodiumLibraryException("salt is " + salt.length + ", it must be" + salt_length + " bytes");
+            throw new SodiumLibraryException("salt is " + salt.length + ", it must be " + salt_length + " bytes");
         }
         byte[] key = new byte[sodium().crypto_box_seedbytes().intValue()];
         int rc = sodium().crypto_pwhash_scryptsalsa208sha256(key, key.length, 
@@ -737,9 +772,9 @@ public class SodiumLibrary
         int nonce_length = sodium().crypto_secretbox_noncebytes().intValue();
         if (nonce_length != nonce.length)
         {
-            throw new SodiumLibraryException("nonce is " + nonce.length + ", it must be" + nonce_length + " bytes");
+            throw new SodiumLibraryException("nonce is " + nonce.length + ", it must be " + nonce_length + " bytes");
         }
-        byte[] cipherText = new byte[(sodium().crypto_box_macbytes().intValue() + message.length)];
+        byte[] cipherText = new byte[(sodium().crypto_secretbox_macbytes().intValue() + message.length)];
 
         int rc = sodium().crypto_secretbox_easy(cipherText,message,message.length,nonce,key);
         if (rc != 0)
@@ -803,7 +838,7 @@ public class SodiumLibrary
             throw new SodiumLibraryException("invalid nonce length " + nonce.length + " bytes");
         }
 
-        byte[] decrypted = new byte[(cipherText.length - sodium().crypto_box_macbytes().intValue())];
+        byte[] decrypted = new byte[(cipherText.length - sodium().crypto_secretbox_macbytes().intValue())];
         int rc = sodium().crypto_secretbox_open_easy(decrypted,cipherText,cipherText.length,nonce,key);
         if (rc != 0)
         {
@@ -953,11 +988,6 @@ public class SodiumLibrary
         {
             return true;
         }
-        else if(rc == -1)
-        {
-            return false;
-        }
-
         return false;
     }
     
@@ -1012,19 +1042,40 @@ public class SodiumLibrary
         return sodium().crypto_box_noncebytes();
     }
     
+    /** @deprecated Use {@link #cryptoBoxSeedBytes()} instead */
+    @Deprecated
     public static NativeLong crytoBoxSeedBytes()
     {
         return sodium().crypto_box_seedbytes();
     }
-    
+
+    public static NativeLong cryptoBoxSeedBytes()
+    {
+        return crytoBoxSeedBytes();
+    }
+
+    /** @deprecated Use {@link #cryptoBoxPublicKeyBytes()} instead */
+    @Deprecated
     public static NativeLong crytoBoxPublicKeyBytes()
     {
         return sodium().crypto_box_publickeybytes();
     }
-    
+
+    public static NativeLong cryptoBoxPublicKeyBytes()
+    {
+        return crytoBoxPublicKeyBytes();
+    }
+
+    /** @deprecated Use {@link #cryptoBoxSecretKeyBytes()} instead */
+    @Deprecated
     public static NativeLong crytoBoxSecretKeyBytes()
     {
        return sodium().crypto_box_secretkeybytes();
+    }
+
+    public static NativeLong cryptoBoxSecretKeyBytes()
+    {
+        return crytoBoxSecretKeyBytes();
     }
     
     public static NativeLong cryptoBoxMacBytes()
@@ -1086,9 +1137,16 @@ public class SodiumLibrary
         return sodium().crypto_pwhash_opslimit_interactive();
     }
     
+    /** @deprecated Use {@link #cryptoPwHashMemLimitInteractive()} instead */
+    @Deprecated
     public static NativeLong cryptoPwHashMemLimitInterative()
     {
         return sodium().crypto_pwhash_memlimit_interactive();
+    }
+
+    public static NativeLong cryptoPwHashMemLimitInteractive()
+    {
+        return cryptoPwHashMemLimitInterative();
     }
     
     public static NativeLong cryptoPwHashScryptSalsa208Sha256SaltBytes()
@@ -1114,7 +1172,7 @@ public class SodiumLibrary
         NativeLong nonce_len = sodium().crypto_box_noncebytes();
         if (nonce.length != nonce_len.intValue())
         {
-            throw new SodiumLibraryException("nonce is " + nonce.length + "bytes, it must be" + nonce_len + " bytes");
+            throw new SodiumLibraryException("nonce is " + nonce.length + " bytes, it must be " + nonce_len + " bytes");
         }
         byte[] cipherText = new byte[(sodium().crypto_box_macbytes().intValue() + message.length)];
         int rc = sodium().crypto_box_easy(cipherText,
@@ -1148,7 +1206,7 @@ public class SodiumLibrary
         NativeLong nonce_len = sodium().crypto_box_noncebytes();
         if (nonce.length != nonce_len.intValue())
         {
-            throw new SodiumLibraryException("nonce is " + nonce.length + "bytes, it must be" + nonce_len + " bytes");
+            throw new SodiumLibraryException("nonce is " + nonce.length + " bytes, it must be " + nonce_len + " bytes");
         }
         byte[] decrypted = new byte[(int) (cipherText.length - sodium().crypto_box_macbytes().intValue())];
         int rc = sodium().crypto_box_open_easy(decrypted, cipherText, 

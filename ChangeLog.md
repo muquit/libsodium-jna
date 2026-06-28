@@ -1,4 +1,4 @@
-## Table Of Contents
+# Table Of Contents
 - [v1.0.5](#v105)
   - [Update (Feb-02-2026)](#update-feb-02-2026)
   - [Update (Feb-04-2026)](#update-feb-04-2026)
