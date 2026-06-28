@@ -1,6 +1,6 @@
 # v1.0.6
 
-Code review and fixes performed with [Claude Code](https://claude.ai/code).
+Code review and fixes performed with @CLAUDE_CODE@.
 See [ClaudeCodeReview.md](ClaudeCodeReview.md) for the full review. No security
 issues were found.
 

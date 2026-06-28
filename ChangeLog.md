@@ -10,7 +10,7 @@
 
 # v1.0.6
 
-Code review and fixes performed with [Claude Code](https://claude.ai/code).
+Code review and fixes performed with [Claude Code](https://code.claude.com/docs/en/overview).
 See [ClaudeCodeReview.md](ClaudeCodeReview.md) for the full review. No security
 issues were found.
 
