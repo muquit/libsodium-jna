@@ -19,11 +19,11 @@ Follow the instructions on @LIBSODIUM_DOC@ page on how to compile and install. I
 ### Maven
 Add the following block inside the dependencies block of your `pom.xml`:
 ```xml
-<!--  As of v1.0.5, libsodium-jna is in the maven central. -->
+<!--  As of v1.0.6, libsodium-jna is in the maven central. -->
 <dependency>
     <groupId>com.muquit.libsodiumjna</groupId>
     <artifactId>libsodium-jna</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 
@@ -44,14 +44,14 @@ project, please update the JNA version to the latest in your pom.xml as follows:
 Add the following to your `build.gradle`:
 ```gradle
 dependencies {
-    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.5'
+    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.6'
 }
 ```
 
 If you need to override the JNA version (recommended for Windows Server 2019 and newer):
 ```gradle
 dependencies {
-    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.5'
+    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.6'
     implementation 'net.java.dev.jna:jna:5.14.0'
 }
 ```

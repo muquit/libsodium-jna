@@ -3,7 +3,7 @@
 - [Javadocs](#javadocs)
 - [Supported platforms](#supported-platforms)
 - [Requirements](#requirements)
-- [Version 1.0.5](#version-105)
+- [Version 1.0.6](#version-106)
 - [How to use](#how-to-use)
   - [Install native libsodium C library first](#install-native-libsodium-c-library-first)
   - [Add libsodium-jna to your project](#add-libsodium-jna-to-your-project)
@@ -89,8 +89,8 @@ non-maven project.
 * This library does not load any libsodium library from path, rather you have to specify exactly where the library is located. 
 
 
-# Version 1.0.5
-The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works with [libsodium](https://libsodium.org)
+# Version 1.0.6
+The current version of libsodium-jna is 1.0.6 (released on Jun-29-2026), works with [libsodium](https://libsodium.org)
 
 * 1.0.22
 * 1.0.21
@@ -100,8 +100,6 @@ The current version of libsodium-jna is 1.0.5 (updated on Aug-31-2024), works wi
 * 1.0.17
 * 1.0.16
 * 1.0.15
-
-**Note:** v1.0.6 has some code cleanup but not in Maven Central yet.
 
 Please look at [ChangeLog](ChangeLog.md) for what is changed in the current version.
 
@@ -126,11 +124,11 @@ Follow the instructions on [libsodium doc](https://download.libsodium.org/doc/) 
 ### Maven
 Add the following block inside the dependencies block of your `pom.xml`:
 ```xml
-<!--  As of v1.0.5, libsodium-jna is in the maven central. -->
+<!--  As of v1.0.6, libsodium-jna is in the maven central. -->
 <dependency>
     <groupId>com.muquit.libsodiumjna</groupId>
     <artifactId>libsodium-jna</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 
@@ -151,14 +149,14 @@ project, please update the JNA version to the latest in your pom.xml as follows:
 Add the following to your `build.gradle`:
 ```gradle
 dependencies {
-    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.5'
+    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.6'
 }
 ```
 
 If you need to override the JNA version (recommended for Windows Server 2019 and newer):
 ```gradle
 dependencies {
-    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.5'
+    implementation 'com.muquit.libsodiumjna:libsodium-jna:1.0.6'
     implementation 'net.java.dev.jna:jna:5.14.0'
 }
 ```
@@ -844,13 +842,13 @@ them to your build path
     $ cd libsodium-jna
     $ mvn dependency:tree
 ...
-[INFO] ---------------< com.muquit.libsodiumjna:libsodium-jna >----------------
-[INFO] Building com.muquit.libsodiumjna 1.0.5
+INFO] ---------------< com.muquit.libsodiumjna:libsodium-jna >----------------
+[INFO] Building com.muquit.libsodiumjna 1.0.6
 [INFO]   from pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
 [INFO] --- dependency:3.7.0:tree (default-cli) @ libsodium-jna ---
-[INFO] com.muquit.libsodiumjna:libsodium-jna:jar:1.0.5
+[INFO] com.muquit.libsodiumjna:libsodium-jna:jar:1.0.6
 [INFO] +- net.java.dev.jna:jna:jar:5.13.0:compile
 [INFO] +- org.slf4j:slf4j-api:jar:1.7.36:compile
 [INFO] +- org.slf4j:slf4j-reload4j:jar:1.7.36:test
@@ -894,4 +892,4 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 ---
-<sub>TOC/glossary expansion by https://github.com/muquit/markdown-toc-go v1.0.5 on Jun-28-2026</sub>
+<sub>TOC/glossary expansion by https://github.com/muquit/markdown-toc-go v1.0.5 on Jun-29-2026</sub>

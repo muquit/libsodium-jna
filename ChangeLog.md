@@ -10,8 +10,6 @@
 
 # v1.0.6
 
-Note: v1.0.6 is not on maven central yet.
-
 Code review and fixes performed with [Claude Code](https://code.claude.com/docs/en/overview).
 See [ClaudeCodeReview.md](ClaudeCodeReview.md) for the full review. No security
 issues were found.
