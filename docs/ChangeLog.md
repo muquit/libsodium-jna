@@ -1,5 +1,7 @@
 # v1.0.6
 
+Note: v1.0.6 is not on maven central yet.
+
 Code review and fixes performed with @CLAUDE_CODE@.
 See [ClaudeCodeReview.md](ClaudeCodeReview.md) for the full review. No security
 issues were found.
