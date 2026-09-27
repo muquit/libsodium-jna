@@ -7,3 +7,5 @@ LIBSODIUM_LATEST [libsodium-1.0.22.tar.gz](https://download.libsodium.org/libsod
 LIBSODIUM_DOC [libsodium doc](https://download.libsodium.org/doc/)
 MARKDOWN_TOC [markdown-toc-go](https://github.com/muquit/markdown-toc-go)
 CLAUDE_CODE  [Claude Code](https://code.claude.com/docs/en/overview)
+SPENEGO [Spenego Software LLC](https://spenego.com)
+OBIDOS [Obidos](https://github.com/spenego/Obidos)

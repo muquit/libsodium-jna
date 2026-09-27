@@ -1,6 +1,8 @@
 # Introduction
 
-*libsodium-jna* is a java library that binds to [libsodium](https://libsodium.org) C crypto APIs with @JNA@ (JNA). I wrote it because I did not like any of the Java implementation of libsodium. I hope you will find this project useful and fun to use.
+*libsodium-jna* is a java library that binds to @LIBSODIUM@ C crypto APIs with @JNA@ (JNA). I wrote it because I did not like any of the Java implementation of libsodium. I hope you will find this project useful and fun to use.
+
+We use *libsodium-jna* in @OBIDOS@, an enterprise web application from my company, @SPENEGO@, to store and share sensitive information securely. Please check it out!
 
 Bug reports, suggestions are always welcome!
 

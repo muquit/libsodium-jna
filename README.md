@@ -52,6 +52,8 @@
 
 *libsodium-jna* is a java library that binds to [libsodium](https://libsodium.org) C crypto APIs with [Java Native Access](https:// github.com/java-native-access/jna) (JNA). I wrote it because I did not like any of the Java implementation of libsodium. I hope you will find this project useful and fun to use.
 
+We use *libsodium-jna* in [Obidos](https://github.com/spenego/Obidos), an enterprise web application from my company, [Spenego Software LLC](https://spenego.com), to store and share sensitive information securely. Please check it out!
+
 Bug reports, suggestions are always welcome!
 
 If you add support to more libsodium APIs, please send me a pull request. If yo do so, please do not forget to update the documentation add unit tests. If you need to generate test vectors, please look at ```misc/gen_test_vectors.c```
@@ -892,4 +894,4 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 ---
-<sub>TOC/glossary expansion by https://github.com/muquit/markdown-toc-go v1.0.5 on Jun-29-2026</sub>
+<sub>TOC/glossary expansion by https://github.com/muquit/markdown-toc-go v1.0.6 on Sep-27-2026</sub>
